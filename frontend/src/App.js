@@ -1,39 +1,30 @@
-import React from 'react';
-import logo from './logo.svg';
-import axios from 'axios';
-import './App.css';
-
-require('dotenv').config()
-
-function handleSubmit(event) {
-  const text = document.querySelector('#char-input').value
-
-  axios
-    .get(`/char_count?text=${text}`).then(({data}) => {
-      document.querySelector('#char-count').textContent = `${data.count} characters!`
-    })
-    .catch(err => console.log(err))
-}
+import React, { useState } from 'react';
+import LandingPage from './LandingPage';
+import LoginPage from './LoginPage';       // you’ll create this later
+import SignupPage from './SignupPage';     // you’ll create this later
+// import MainApp from './MainApp';            // your existing app or guest view
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload. hihihi
-        </p>
-        <div>
-        <label htmlFor='char-input'>How many characters does </label>
-        <input id='char-input' type='text' placeholder="my string"/><span> </span>
-        <button onClick={handleSubmit}>have?</button>
-        <div>
-          <h3 id='char-count' data-testid="char-count"> </h3>
-        </div>
-      </div>
-      </header>
-    </div>
-  );
+  const [page, setPage] = useState('landing');
+
+  function handleSelectOption(option) {
+    setPage(option);
+  }
+
+  if (page === 'landing') {
+    return <LandingPage onSelectOption={handleSelectOption} />;
+  }
+  if (page === 'login') {
+    return <LoginPage onBack={() => setPage('landing')} />;
+  }
+  if (page === 'signup') {
+    return <SignupPage onBack={() => setPage('landing')} />;
+  }
+  // if (page === 'guest') {
+  //   return <MainApp />;
+  // }
+
+  return null;
 }
 
 export default App;
