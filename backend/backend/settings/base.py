@@ -14,7 +14,8 @@ from pathlib import Path
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../"))
+BASE_DIR = Path(__file__).resolve().parent.parent.parent
+
 
 
 # Application definition
@@ -76,7 +77,6 @@ REST_FRAMEWORK = {
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-         BASE_DIR = Path(__file__).resolve().parent.parent.parent
     }
 }
 
