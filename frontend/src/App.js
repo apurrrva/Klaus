@@ -1,30 +1,52 @@
 import React, { useState } from 'react';
 import LandingPage from './LandingPage';
-import LoginPage from './LoginPage';       // you’ll create this later
-import SignupPage from './SignupPage';     // you’ll create this later
-// import MainApp from './MainApp';            // your existing app or guest view
+import LoginPage from './LoginPage';
+import SignupPage from './SignupPage';
+import ProfilesPage from './ProfilesPage';
+import SwipePage from './SwipePage';
 
 function App() {
-  const [page, setPage] = useState('landing');
+  const [stage, setStage] = useState('landing');
+  const [user, setUser] = useState(null);
+  const [activeProfile, setActiveProfile] = useState(null); // whose profile is being swiped
 
-  function handleSelectOption(option) {
-    setPage(option);
-  }
+  const handleOptionSelect = (option) => {
+    if (option === 'guest') {
+      setUser({ name: 'Guest', friends: ['Alice', 'Bob'] });
+      setStage('profiles');
+    } else {
+      setStage(option);
+    }
+  };
 
-  if (page === 'landing') {
-    return <LandingPage onSelectOption={handleSelectOption} />;
-  }
-  if (page === 'login') {
-    return <LoginPage onBack={() => setPage('landing')} />;
-  }
-  if (page === 'signup') {
-    return <SignupPage onBack={() => setPage('landing')} />;
-  }
-  // if (page === 'guest') {
-  //   return <MainApp />;
-  // }
+  const handleLogin = (username) => {
+    setUser({ name: username, friends: ['Alice', 'Bob'] });
+    setStage('profiles');
+  };
 
-  return null;
+  const handleStartSwiping = (profileName) => {
+    setActiveProfile(profileName);
+    setStage('swipe');
+  };
+
+  if (stage === 'landing') return <LandingPage onSelectOption={handleOptionSelect} />;
+  if (stage === 'login') return <LoginPage onLogin={handleLogin} />;
+  if (stage === 'signup') return <SignupPage onSignup={handleLogin} />;
+  if (stage === 'profiles') return (
+    <ProfilesPage 
+      user={user} 
+      onStartSwiping={handleStartSwiping}
+    />
+  );
+  if (stage === 'swipe') return (
+    <SwipePage 
+      profileName={activeProfile}
+      user={user}
+      onBack={() => setStage('profiles')}
+    />
+  );
+
+  return <div>Unknown stage</div>;
 }
 
 export default App;
