@@ -1,5 +1,6 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import fakeItems from './data/fakeItems';
+import './SwipePage.css'; // Import the CSS file
 
 function SwipePage({ user, onBack, onAddToGiftList }) {
   const [index, setIndex] = useState(0);
@@ -15,6 +16,28 @@ function SwipePage({ user, onBack, onAddToGiftList }) {
   const swipeThreshold = 100; // minimum distance to trigger a swipe action
 
   const currentItem = fakeItems[index];
+
+  // Animation functions
+  const animateSwipe = (direction, onComplete) => {
+    if (!cardRef.current) return;
+    
+    const targetX = direction === 'left' ? -window.innerWidth : window.innerWidth;
+    cardRef.current.style.transition = 'transform 0.5s ease-out';
+    cardRef.current.style.transform = `translateX(${targetX}px) rotate(${direction === 'left' ? -5 : 5}deg)`;
+    
+    setTimeout(() => {
+      if (onComplete) onComplete();
+    }, 500);
+  };
+
+  const animateReset = () => {
+    if (!cardRef.current) return;
+    
+    cardRef.current.style.transition = 'transform 0.3s ease-out';
+    cardRef.current.style.transform = 'translateX(0) rotate(0)';
+    setSwipeOffset(0);
+    setSwipeDirection(null);
+  };
 
   const handleLike = () => {
     animateSwipe('right', () => {
@@ -47,8 +70,8 @@ function SwipePage({ user, onBack, onAddToGiftList }) {
     }
   };
 
-  // Touch and mouse event handlers
-  const handleStart = (clientX) => {
+  // Touch and mouse event handlers - memoized with useCallback
+  const handleStart = useCallback((clientX) => {
     setIsDragging(true);
     startXRef.current = clientX;
     currentXRef.current = clientX;
@@ -57,9 +80,9 @@ function SwipePage({ user, onBack, onAddToGiftList }) {
     if (cardRef.current) {
       cardRef.current.style.transition = '';
     }
-  };
+  }, []);
 
-  const handleMove = (clientX) => {
+  const handleMove = useCallback((clientX) => {
     if (!isDragging) return;
     
     currentXRef.current = clientX;
@@ -74,9 +97,9 @@ function SwipePage({ user, onBack, onAddToGiftList }) {
     } else {
       setSwipeDirection(null);
     }
-  };
+  }, [isDragging]);
 
-  const handleEnd = () => {
+  const handleEnd = useCallback(() => {
     if (!isDragging) return;
     setIsDragging(false);
     
@@ -92,55 +115,33 @@ function SwipePage({ user, onBack, onAddToGiftList }) {
       // Not enough movement, reset position
       animateReset();
     }
-  };
-
-  // Animation functions
-  const animateSwipe = (direction, onComplete) => {
-    if (!cardRef.current) return;
-    
-    const targetX = direction === 'left' ? -window.innerWidth : window.innerWidth;
-    cardRef.current.style.transition = 'transform 0.5s ease-out';
-    cardRef.current.style.transform = `translateX(${targetX}px) rotate(${direction === 'left' ? -5 : 5}deg)`;
-    
-    setTimeout(() => {
-      if (onComplete) onComplete();
-    }, 500);
-  };
-
-  const animateReset = () => {
-    if (!cardRef.current) return;
-    
-    cardRef.current.style.transition = 'transform 0.3s ease-out';
-    cardRef.current.style.transform = 'translateX(0) rotate(0)';
-    setSwipeOffset(0);
-    setSwipeDirection(null);
-  };
+  }, [isDragging, swipeThreshold, handleLike, handleDislike]);
 
   // Touch event handlers
-  const handleTouchStart = (e) => {
+  const handleTouchStart = useCallback((e) => {
     handleStart(e.touches[0].clientX);
-  };
+  }, [handleStart]);
 
-  const handleTouchMove = (e) => {
+  const handleTouchMove = useCallback((e) => {
     handleMove(e.touches[0].clientX);
-  };
+  }, [handleMove]);
 
-  const handleTouchEnd = () => {
+  const handleTouchEnd = useCallback(() => {
     handleEnd();
-  };
+  }, [handleEnd]);
 
   // Mouse event handlers
-  const handleMouseDown = (e) => {
+  const handleMouseDown = useCallback((e) => {
     handleStart(e.clientX);
-  };
+  }, [handleStart]);
 
-  const handleMouseMove = (e) => {
+  const handleMouseMove = useCallback((e) => {
     handleMove(e.clientX);
-  };
+  }, [handleMove]);
 
-  const handleMouseUp = () => {
+  const handleMouseUp = useCallback(() => {
     handleEnd();
-  };
+  }, [handleEnd]);
 
   // Add and remove mouse move/up listeners
   useEffect(() => {
@@ -153,198 +154,75 @@ function SwipePage({ user, onBack, onAddToGiftList }) {
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('mouseup', handleMouseUp);
     };
-  }, [isDragging]);
+  }, [isDragging, handleMouseMove, handleMouseUp]);
 
   if (!currentItem) return <div>No more items to swipe!</div>;
 
   // Calculate rotation based on swipe offset
   const rotation = swipeOffset / 20; // Adjust divisor to control rotation amount
   const cardStyle = {
-    ...styles.card,
     transform: `translateX(${swipeOffset}px) rotate(${rotation}deg)`,
     transition: isDragging ? '' : 'transform 0.3s ease-out'
   };
 
+  // Calculate progress percentage
+  const progressPercentage = `${(index / fakeItems.length) * 100}%`;
+
   return (
-    <div style={styles.container}>
+    <div className="swipe-container">
       <h2>Swiping as {user.name}</h2>
       
-      {!showPrompt ? (
-        <div 
-          ref={cardRef}
-          style={cardStyle}
-          onTouchStart={handleTouchStart}
-          onTouchMove={handleTouchMove}
-          onTouchEnd={handleTouchEnd}
-          onMouseDown={handleMouseDown}
-        >
-          <img src={currentItem.image || "/placeholder.svg"} alt={currentItem.name} style={styles.image} />
-          <h3>{currentItem.name}</h3>
-          <p>{currentItem.description}</p>
-          
-          {/* Swipe indicators */}
-          {swipeDirection === 'right' && (
-            <div style={styles.likeIndicator}>LIKE</div>
-          )}
-          {swipeDirection === 'left' && (
-            <div style={styles.dislikeIndicator}>NOPE</div>
-          )}
-        </div>
-      ) : (
-        <div style={styles.promptContainer}>
-          <p>Add to gift list?</p>
-          <div style={styles.buttons}>
-            <button style={styles.yesButton} onClick={() => addToGiftList(true)}>Yes</button>
-            <button style={styles.noButton} onClick={() => addToGiftList(false)}>No</button>
+      <div className="swipe-card-container">
+        {!showPrompt ? (
+          <div 
+            ref={cardRef}
+            className="swipe-card"
+            style={cardStyle}
+            onTouchStart={handleTouchStart}
+            onTouchMove={handleTouchMove}
+            onTouchEnd={handleTouchEnd}
+            onMouseDown={handleMouseDown}
+          >
+            <img className="swipe-image" src={currentItem.image || "/placeholder.svg"} alt={currentItem.name} />
+            <h3>{currentItem.name}</h3>
+            <p>{currentItem.description}</p>
+            
+            {/* Swipe indicators */}
+            {swipeDirection === 'right' && (
+              <div className="like-indicator">LIKE</div>
+            )}
+            {swipeDirection === 'left' && (
+              <div className="dislike-indicator">NOPE</div>
+            )}
           </div>
+        ) : (
+          <div className="prompt-container">
+            <p>Add to gift list?</p>
+            <div className="button-container">
+              <button className="yes-button" onClick={() => addToGiftList(true)}>Yes</button>
+              <button className="no-button" onClick={() => addToGiftList(false)}>No</button>
+            </div>
+          </div>
+        )}
+      </div>
+      
+      <div className="progress-container">
+        <div className="progress-bar">
+          <div 
+            className="progress-fill"
+            style={{ width: progressPercentage }}
+          />
         </div>
-      )}
+      </div>
       
       {!showPrompt && (
-        <div style={styles.buttons}>
-          <button style={styles.dislikeButton} onClick={handleDislike}>Dislike</button>
-          <button style={styles.likeButton} onClick={handleLike}>Like</button>
+        <div className="button-container">
+          <button className="dislike-button" onClick={handleDislike}>Dislike</button>
+          <button className="like-button" onClick={handleLike}>Like</button>
         </div>
       )}
-      
-      <div style={styles.progressBar}>
-        <div 
-          style={{
-            ...styles.progressFill,
-            width: `${(index / fakeItems.length) * 100}%`
-          }}
-        />
-      </div>
     </div>
   );
 }
-
-const styles = {
-  container: { 
-    display: 'flex', 
-    flexDirection: 'column', 
-    alignItems: 'center', 
-    marginTop: '30px',
-    width: '100%',
-    maxWidth: '500px',
-    margin: '0 auto',
-    padding: '20px',
-    position: 'relative',
-    height: '100vh'
-  },
-  card: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    padding: '20px',
-    borderRadius: '10px',
-    boxShadow: '0 4px 15px rgba(0, 0, 0, 0.1)',
-    backgroundColor: 'white',
-    position: 'relative',
-    cursor: 'grab',
-    userSelect: 'none',
-    touchAction: 'pan-y',
-    width: '100%',
-    maxWidth: '400px'
-  },
-  image: { 
-    width: '200px', 
-    height: '200px', 
-    objectFit: 'cover',
-    borderRadius: '8px',
-    marginBottom: '15px'
-  },
-  buttons: { 
-    display: 'flex', 
-    gap: '20px', 
-    marginTop: '30px',
-    justifyContent: 'center',
-    width: '100%'
-  },
-  likeButton: {
-    padding: '12px 30px',
-    backgroundColor: '#4CAF50',
-    color: 'white',
-    border: 'none',
-    borderRadius: '50px',
-    cursor: 'pointer',
-    fontSize: '16px'
-  },
-  dislikeButton: {
-    padding: '12px 30px',
-    backgroundColor: '#F44336',
-    color: 'white',
-    border: 'none',
-    borderRadius: '50px',
-    cursor: 'pointer',
-    fontSize: '16px'
-  },
-  yesButton: {
-    padding: '12px 30px',
-    backgroundColor: '#4CAF50',
-    color: 'white',
-    border: 'none',
-    borderRadius: '50px',
-    cursor: 'pointer',
-    fontSize: '16px'
-  },
-  noButton: {
-    padding: '12px 30px',
-    backgroundColor: '#F44336',
-    color: 'white',
-    border: 'none',
-    borderRadius: '50px',
-    cursor: 'pointer',
-    fontSize: '16px'
-  },
-  likeIndicator: {
-    position: 'absolute',
-    top: '20px',
-    right: '20px',
-    backgroundColor: '#4CAF50',
-    color: 'white',
-    padding: '5px 15px',
-    borderRadius: '20px',
-    fontWeight: 'bold',
-    transform: 'rotate(15deg)',
-    border: '2px solid white'
-  },
-  dislikeIndicator: {
-    position: 'absolute',
-    top: '20px',
-    left: '20px',
-    backgroundColor: '#F44336',
-    color: 'white',
-    padding: '5px 15px',
-    borderRadius: '20px',
-    fontWeight: 'bold',
-    transform: 'rotate(-15deg)',
-    border: '2px solid white'
-  },
-  promptContainer: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    padding: '30px',
-    borderRadius: '10px',
-    boxShadow: '0 4px 15px rgba(0, 0, 0, 0.1)',
-    backgroundColor: 'white',
-    width: '100%',
-    maxWidth: '400px'
-  },
-  progressBar: {
-    width: '100%',
-    height: '6px',
-    backgroundColor: '#e0e0e0',
-    borderRadius: '3px',
-    marginTop: '30px',
-    overflow: 'hidden'
-  },
-  progressFill: {
-    height: '100%',
-    backgroundColor: '#4CAF50',
-    transition: 'width 0.3s ease'
-  }
-};
 
 export default SwipePage;
