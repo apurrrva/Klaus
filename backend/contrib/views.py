@@ -13,3 +13,4 @@ def signup_api(request):
         user = User.objects.create(name=name, age=age, password=password)
         return JsonResponse({'id': user.id, 'name': user.name})
 
+
