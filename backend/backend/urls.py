@@ -6,5 +6,5 @@ from django.views.generic import TemplateView
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("char_count", char_count, name="char_count"),
-    re_path(".*", TemplateView.as_view(template_name="index.html")),
+    # re_path(".*", TemplateView.as_view(template_name="index.html")),
 ]
