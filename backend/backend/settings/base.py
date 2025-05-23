@@ -66,6 +66,7 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
+    "http://localhost:8000",
 ]
 
 REST_FRAMEWORK = {
