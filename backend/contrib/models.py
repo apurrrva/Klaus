@@ -28,7 +28,6 @@ class People(models.Model):
 
 class User(models.Model):
     name = models.CharField(max_length=100)
-    age = models.PositiveIntegerField()
     password = models.CharField(max_length=128)
     friendlist = models.ManyToManyField(People, blank=True, related_name='friends_of')
 
