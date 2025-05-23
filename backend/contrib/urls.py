@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import get_products, create_user_profile, record_swipe, get_recommendations
+from contrib.views import get_products, create_user_profile, record_swipe, get_recommendations
 
 urlpatterns = [
     path('products/', get_products, name='get_products'),
