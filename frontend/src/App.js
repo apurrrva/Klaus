@@ -7,6 +7,7 @@ import SignupPage from "./SignupPage"
 import ProfilesPage from "./ProfilesPage"
 import SwipePage from "./SwipePage"
 import CartPage from "./cart-page.js"
+import IdeaBoardPage from "./IdeaBoardPage" // <-- Add this import!
 import React from 'react';
 
 function App() {
@@ -14,6 +15,8 @@ function App() {
   const [user, setUser] = useState(null)
   const [activeProfile, setActiveProfile] = useState(null) // whose profile is being swiped
   const [cartItems, setCartItems] = useState([]) // cart state
+  const [currentPage, setCurrentPage] = useState('swipe'); // 'swipe' or 'ideaBoard'
+
 
   const handleOptionSelect = (option) => {
     if (option === "guest") {
@@ -70,6 +73,7 @@ function App() {
         user={user}
         onBack={() => setStage("profiles")}
         onCartClick={handleCartClick}
+        onIdeaBoard={() => setStage("ideaBoard")}
         onAddToGiftList={handleAddToGiftList}
       />
     )
@@ -83,6 +87,13 @@ function App() {
         setCartItems={setCartItems}
       />
     )
+    if (stage === "ideaBoard")
+    return (
+      <IdeaBoardPage
+        onBack={() => setStage("swipe")} // <-- so we can go backkk to the swipe ig 
+      />
+    )
+
 
   return <div>Unknown stage</div>
 }
