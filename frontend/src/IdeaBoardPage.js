@@ -3,10 +3,10 @@ import './SwipePage.css';
 
 function IdeaBoardPage({ onBack }) {
   const allIdeas = [
-    { id: 1, name: "Coffee Mug", image: "artisan-coffee-beans.jpg", assignedTo: "Alice" },
-    { id: 2, name: "Bluetooth Speaker", image: "bluetooth-speaker.jpg", assignedTo: "Bob" },
-    { id: 4, name: "Leather Journal", image: "leatherjournal.jpg", assignedTo: "Alice" },
-    { id: 6, name: "Elden Ring", image: "elden-ring.jpg", assignedTo: "Bob" }
+    { id: 1, name: "Coffee Mug", image: "artisan-coffee-beans.jpg", assignedTo: "Alice", price: 12.99 },
+    { id: 2, name: "Bluetooth Speaker", image: "bluetooth-speaker.jpg", assignedTo: "Bob", price: 44.95 },
+    { id: 4, name: "Leather Journal", image: "leatherjournal.jpg", assignedTo: "Alice", price: 18.49 },
+    { id: 6, name: "Elden Ring", image: "elden-ring.jpg", assignedTo: "Bob", price: 59.99 }
   ];
 
   const [selectedPerson, setSelectedPerson] = useState("Alice");
@@ -39,7 +39,11 @@ function IdeaBoardPage({ onBack }) {
       {/* Main card container */}
       <div className="swipe-card-container">
         <div className="swipe-card" style={{ minHeight: 200 }}>
-          <h3 className="idea-board-title">Idea Board</h3>
+
+            <h3 className="idea-board-title whimsical">
+            ༻Ideas Board༺
+            </h3>
+  
           <div className="idea-board-grid">
             {visibleIdeas.length === 0 ? (
               <div style={{ gridColumn: '1 / -1', textAlign: 'center', color: '#888', padding: '40px 0' }}>
@@ -72,6 +76,7 @@ function IdeaBoardPage({ onBack }) {
                     className="idea-card-img"
                   />
                   <div className="idea-card-title">{idea.name}</div>
+                  <div className="idea-card-price">${idea.price.toFixed(2)}</div>
                 </div>
               ))
             )}
@@ -81,23 +86,18 @@ function IdeaBoardPage({ onBack }) {
 
       {/* Bottom Navigation Bar with Person Selector */}
       <div className="fixed-nav-container">
-        <div className="card-nav" style={{
-          justifyContent: "center", alignItems: "center"
-        }}>
-          <span style={{ color: "white", marginRight: 10, fontWeight: 500 }}>Viewing ideas for:</span>
-          <select
-            value={selectedPerson}
-            onChange={e => setSelectedPerson(e.target.value)}
-            style={{
-              fontSize: "1em",
-              padding: "5px 12px",
-              borderRadius: 6,
-              border: "1px solid #ccc"
-            }}
-          >
-            <option value="Alice">Alice</option>
-            <option value="Bob">Bob</option>
-          </select>
+        <div className="card-nav person-selector-nav">
+          <span className="person-nav-label">Viewing ideas for:</span>
+          <div className="person-nav-select-container">
+            <select
+              value={selectedPerson}
+              onChange={e => setSelectedPerson(e.target.value)}
+              className="person-nav-select"
+            >
+              <option value="Alice">Alice</option>
+              <option value="Bob">Bob</option>
+            </select>
+          </div>
         </div>
       </div>
     </div>

@@ -432,7 +432,7 @@ body {
   font-weight: 600;
   font-size: 15px;
   text-align: center;
-  color: #452c63;
+  color: #3b1b1b;
 }
 
 .idea-add-cart-btn {
@@ -457,4 +457,68 @@ body {
 .idea-add-cart-btn svg {
   fill: #fff; /* White icon */
 }
+
+
+
+.card-nav.person-selector-nav {
+  background: #822323;
+  min-height: 80px;        /* Thick nav bar */
+  max-width: 420px;
+  margin: 0 auto;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  padding: 0 24px;
+  box-sizing: border-box;
+}
+
+/* Label forced to the left */
+.person-nav-label {
+  color: #fff;
+  font-weight: 600;
+  font-size: 1.1em;
+  flex: 1;
+  text-align: left;
+  letter-spacing: 0.01em;
+}
+
+/* Container for select, aligned right */
+.person-nav-select-container {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+/* Style the select dropdown */
+.person-nav-select {
+  font-size: 1.05em;
+  padding: 8px 16px;
+  border-radius: 6px;
+  border: 1px solid #fff;
+  background: #822323;
+  font-weight: 500;
+  color: #ffffff;
+  min-width: 120px;
+  margin-left: 12px;
+}
+.person-nav-select:focus {
+  outline: none;
+  border: 2px solid #ffffff;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Fleur+De+Leah&display=swap');
+
+.idea-board-title.whimsical {
+  font-family: 'Fleur De Leah', cursive;
+  font-size: 3.2em;               /* NEEDS TO BE BIGGER */
+  color: #4f1010;
+  letter-spacing: 1.5px;
+  text-align: center;
+  margin-bottom: 22px;
+  margin-top: 10px;
+  font-weight: normal;
+  text-shadow: 0 4px 16px #e0c2ff44;
+}
+
 
