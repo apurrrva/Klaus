@@ -442,4 +442,9 @@ body {
   padding-bottom: 20px;
 }
 
-
+.my-gif {
+  display: block;
+  margin: 0 auto 16px auto;
+  width: 120px; /* or whatever size you want */
+  height: auto;
+}

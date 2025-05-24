@@ -177,6 +177,10 @@ function SwipePage({ user, onBack, onAddToGiftList }) {
     
     <div className="swipe-container">
       <h2>Swiping as {user.name}</h2>
+
+      {/*  GIF here */}
+      <img src="/assets/cat.gif" alt="Swiping animation" className="my-gif" />
+
       
       <div className="swipe-card-container">
         {!showPrompt ? (
