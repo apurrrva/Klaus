@@ -223,6 +223,13 @@ function SwipePage({ user, onBack, onAddToGiftList }) {
         )}
       </div>
 
+      <img
+    src="https://cdn.discordapp.com/attachments/1373870449506652182/1375739723850453104/cat.gif?ex=6832c8f6&is=68317776&hm=4e40beee3f787ab45e464d907a049634702b031f1483d1f94f9047746cc5b684&"
+    alt="Dancing Cat"
+    className="cat-gif"
+  />
+
+
       <div className="fixed-nav-container">
         <div className="card-nav">
           <div className="card-nav-item" onClick={() => handleNavigation("home")}>
