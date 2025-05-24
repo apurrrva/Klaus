@@ -452,6 +452,163 @@ html {
   right: 0;
 }
 
+
+
+.idea-board-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0;
+}
+.idea-card {
+  background: #faf6ff;
+  border-radius: 16px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 12px 8px 10px 8px;
+  margin-bottom: 10px;
+  min-height: 150px;
+  max-width: 98%;
+  position: relative; /* This is important for absolute positioning the button inside */
+}
+.idea-card-img {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  background: #eee;
+}
+.idea-card-title {
+  font-weight: 600;
+  font-size: 15px;
+  text-align: center;
+  color: #3b1b1b;
+}
+
+.idea-add-cart-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: #d32f2f; /* Bright red */
+  border: none;
+  border-radius: 50%;
+  padding: 7px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.09);
+  cursor: pointer;
+  z-index: 2;
+  transition: background 0.15s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.idea-add-cart-btn:hover {
+  background: #b71c1c; /* Darker red on hover */
+}
+.idea-add-cart-btn svg {
+  fill: #fff; /* White icon */
+}
+
+
+
+.card-nav.person-selector-nav {
+  background: #822323;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+/* Label forced to the left */
+.person-nav-label {
+  color: #fff;
+  font-weight: 600;
+  font-size: 1.1em;
+  flex: 1;
+  text-align: left;
+  letter-spacing: 0.01em;
+}
+
+/* Container for select, aligned right */
+.person-nav-select-container {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+/* Style the select dropdown */
+.person-nav-select {
+  font-size: 1.05em;
+  border-radius: 6px;
+  border: 1px solid #fff;
+  background: #822323;
+  font-weight: 500;
+  color: #ffffff;
+  min-width: 120px;
+  margin-left: 12px;
+}
+.person-nav-select:focus {
+  outline: none;
+  border: 2px solid #ffffff;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Fleur+De+Leah&display=swap');
+
+.idea-board-title.whimsical {
+  font-family: 'Fleur De Leah', cursive;
+  font-size: 3.2em;               /* NEEDS TO BE BIGGER */
+  color: #4f1010;
+  letter-spacing: 1.5px;
+  text-align: center;
+  margin-bottom: 22px;
+  margin-top: 10px;
+  font-weight: normal;
+  text-shadow: 0 4px 16px #e0c2ff44;
+}
+
+.card-nav.person-selector-nav {
+  background: #822323;
+  width: 100%;
+  max-width: 500px; /* Match swipe-card or cart nav width */
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  padding: 0 16px;
+}
+
+/* Style the select dropdown */
+.person-nav-select {
+  font-size: 1.05em;
+  border-radius: 6px;
+  border: 1.5px solid #fff;
+  background: #822323;
+  font-weight: 500;
+  color: #fff;
+  min-width: 120px;
+  margin-left: 12px;
+  padding: 8px 16px;
+  box-shadow: none;
+  appearance: none;
+  /* Optional: Add a caret if you want the dropdown arrow white */
+  background-image: url("data:image/svg+xml,%3Csvg fill='white' height='18' viewBox='0 0 24 24' width='18' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 18px 18px;
+}
+
+
+
+
+
+
 .confetti-gif {
   position: fixed;
   bottom: 65px;
@@ -561,3 +718,4 @@ html {
   color: #333;
   font-weight: 500;
 }
+
