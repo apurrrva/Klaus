@@ -36,7 +36,6 @@ function IdeaBoardPage({ onBack }) {
         </div>
       </div>
 
-
       {/* Main card container */}
       <div className="swipe-card-container">
         <div className="swipe-card" style={{ minHeight: 200 }}>
@@ -80,10 +79,25 @@ function IdeaBoardPage({ onBack }) {
         </div>
       </div>
 
-      {/* umm idk */}
+      {/* Bottom Navigation Bar with Person Selector */}
       <div className="fixed-nav-container">
-        <div className="card-nav">
-          {/* what */}
+        <div className="card-nav" style={{
+          justifyContent: "center", alignItems: "center"
+        }}>
+          <span style={{ color: "white", marginRight: 10, fontWeight: 500 }}>Viewing ideas for:</span>
+          <select
+            value={selectedPerson}
+            onChange={e => setSelectedPerson(e.target.value)}
+            style={{
+              fontSize: "1em",
+              padding: "5px 12px",
+              borderRadius: 6,
+              border: "1px solid #ccc"
+            }}
+          >
+            <option value="Alice">Alice</option>
+            <option value="Bob">Bob</option>
+          </select>
         </div>
       </div>
     </div>
