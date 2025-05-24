@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect, useCallback } from 'react';
 import fakeItems from './data/fakeItems';
 import './SwipePage.css'; // Import the CSS file
 
-function SwipePage({ user, onBack, onAddToGiftList }) {
+function SwipePage({ user, onBack, onCartClick, onAddToGiftList }) {
   const [index, setIndex] = useState(0)
   const [showPrompt, setShowPrompt] = useState(false)
   const [swipeDirection, setSwipeDirection] = useState(null)
@@ -21,6 +21,16 @@ function SwipePage({ user, onBack, onAddToGiftList }) {
     console.log(`Navigating to ${page}`)
     // Add your navigation logic here
   }
+  
+  const handleCartClick = () => {
+    if (onCartClick) {
+      onCartClick()
+    } else {
+      console.log("Navigate to cart page")
+      // Default behavior if no onCartClick prop is provided
+    }
+  }
+
 
   // Animation functions
   const animateSwipe = (direction, onComplete) => {
@@ -197,19 +207,20 @@ function SwipePage({ user, onBack, onAddToGiftList }) {
         height="45"
       />
     </div>
-    <div className="header-cart">
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 24 24"
-        width="22"
-        height="28"
-        fill="white"
-      >
-        <path d="M22.713,4.077A2.993,2.993,0,0,0,20.41,3H4.242L4.2,2.649A3,3,0,0,0,1.222,0H1A1,1,0,0,0,1,2h.222a1,1,0,0,1,.993.883l1.376,11.7A5,5,0,0,0,8.557,19H19a1,1,0,0,0,0-2H8.557a3,3,0,0,1-2.82-2h11.92a5,5,0,0,0,4.921-4.113l.785-4.354A2.994,2.994,0,0,0,22.713,4.077ZM21.4,6.178l-.786,4.354A3,3,0,0,1,17.657,13H5.419L4.478,5H20.41A1,1,0,0,1,21.4,6.178Z"/>
-        <circle cx="7" cy="22" r="2"/>
-        <circle cx="17" cy="22" r="2"/>
-      </svg>
-    </div>
+     <div className="header-cart" onClick={handleCartClick}>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            width="22"
+            height="28"
+            fill="white"
+            style={{ cursor: "pointer" }}
+          >
+            <path d="M22.713,4.077A2.993,2.993,0,0,0,20.41,3H4.242L4.2,2.649A3,3,0,0,0,1.222,0H1A1,1,0,0,0,1,2h.222a1,1,0,0,1,.993.883l1.376,11.7A5,5,0,0,0,8.557,19H19a1,1,0,0,0,0-2H8.557a3,3,0,0,1-2.82-2h11.92a5,5,0,0,0,4.921-4.113l.785-4.354A2.994,2.994,0,0,0,22.713,4.077ZM21.4,6.178l-.786,4.354A3,3,0,0,1,17.657,13H5.419L4.478,5H20.41A1,1,0,0,1,21.4,6.178Z" />
+            <circle cx="7" cy="22" r="2" />
+            <circle cx="17" cy="22" r="2" />
+          </svg>
+        </div>
   </div>
 </>
 
