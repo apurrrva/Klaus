@@ -398,3 +398,38 @@ body {
   left: 0;
   right: 0;
 }
+
+.idea-board-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0;
+}
+.idea-card {
+  background: #faf6ff;
+  border-radius: 16px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 12px 8px 10px 8px;
+  margin-bottom: 10px;
+  min-height: 150px;
+  max-width: 98%;
+}
+.idea-card-img {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  background: #eee;
+}
+.idea-card-title {
+  font-weight: 600;
+  font-size: 15px;
+  text-align: center;
+  color: #452c63;
+}

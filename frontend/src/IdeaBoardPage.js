@@ -1,13 +1,29 @@
 import React from 'react';
 import './SwipePage.css'; // Reuse the same styles
 
-function IdeaBoardPage({ onBack, onIdeaBoard, onCartClick, handleNavigation }) {
+
+function IdeaBoardPage({ onBack, onIdeaBoard,handleNavigation }) {
   // Dummy ideas for demonstration
   const ideas = [
-    { id: 1, text: "Gift exchange party ideas" },
-    { id: 2, text: "Secret Santa themes" },
-    { id: 3, text: "Wishlist collaboration" }
-  ];
+    {
+      id: 2,
+      name: "Polaroid Camera",
+      image: "/assets/polaroidcamera.jpg",
+      description: "Vintage-style instant camera",
+    },
+    {
+        id: 19,
+        name: "Elden Ring",
+        image: "/assets/elden-ring.jpg",
+        description: "Rise Tarnished",
+      },
+      {
+        id: 22,
+        name: "Sakura Miku Figure",
+        image: "/assets/miku.jpg",
+        description: "Ring in the Spring with Sakura Miku: Hanami Outfit Ver.!"
+      },
+  ]
 
   return (
     <div className="swipe-container">
@@ -30,16 +46,18 @@ function IdeaBoardPage({ onBack, onIdeaBoard, onCartClick, handleNavigation }) {
       {/* Main card container */}
       <div className="swipe-card-container">
         <div className="swipe-card" style={{ minHeight: 200 }}>
-          <h3>Idea Board</h3>
-          <ul style={{ padding: 0 }}>
+          <h3 className="idea-board-title">Idea Board</h3>
+          <div className="idea-board-grid">
             {ideas.map((idea) => (
-              <li key={idea.id} style={{ margin: '10px 0', fontSize: '18px', listStyle: 'none' }}>
-                {idea.text}
-              </li>
+              <div className="idea-card" key={idea.id}>
+                <img src={idea.image} alt={idea.name} className="idea-card-img" />
+                <div className="idea-card-title">{idea.name}</div>
+              </div>
             ))}
-          </ul>
+          </div>
         </div>
       </div>
+
 
       {/* Bottom Navigation Bar - copy this exactly from SwipePage for consistency */}
       <div className="fixed-nav-container">
