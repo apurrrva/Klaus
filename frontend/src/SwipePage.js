@@ -134,6 +134,7 @@ function SwipePage({ user, onBack, onAddToGiftList }) {
     handleStart(e.clientX);
   };
 
+  
   const handleMouseMove = (e) => {
     handleMove(e.clientX);
   };
@@ -142,13 +143,13 @@ function SwipePage({ user, onBack, onAddToGiftList }) {
     handleEnd();
   };
 
-  // Add and remove mouse move/up listeners
+
+// eslint-disable-next-line
   useEffect(() => {
     if (isDragging) {
       window.addEventListener('mousemove', handleMouseMove);
       window.addEventListener('mouseup', handleMouseUp);
     }
-    
     return () => {
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('mouseup', handleMouseUp);

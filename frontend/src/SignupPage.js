@@ -5,18 +5,33 @@ export default function SignupPage({ onBack, onSignupSuccess }) {
   const [password, setPassword] = useState('');
 
 
-  // Basic form submission handler (customize as needed for your backend)
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // TODO: Replace this with actual signup logic (API call)
-    
-
-
-    // Simulate successful signup and redirect to login page
-
-
-    if (onSignupSuccess) {
-      onSignupSuccess();
+  
+    try {
+      const response = await fetch('http://localhost:8000/signup_api/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: username,  // use "name" to match your Django view
+          password: password,
+        }),
+      });
+  
+      if (!response.ok) {
+        const errorData = await response.json();
+        alert(`Signup failed: ${errorData.error || 'Unknown error'}`);
+        return;
+      }
+  
+      // Success!
+      if (onSignupSuccess) {
+        onSignupSuccess();
+      }
+    } catch (error) {
+      alert('Network error: ' + error.message);
     }
   };
 
