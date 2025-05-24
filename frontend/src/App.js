@@ -11,7 +11,7 @@ import IdeaBoardPage from "./IdeaBoardPage" // <-- Add this import!
 import React from 'react';
 
 function App() {
-  const [stage, setStage] = useState("landing")
+  const [stage, setStage] = useState("login")
   const [user, setUser] = useState(null)
   const [activeProfile, setActiveProfile] = useState(null) // whose profile is being swiped
   const [cartItems, setCartItems] = useState([]) // cart state
@@ -28,13 +28,16 @@ function App() {
   }
 
   const handleLogin = (username) => {
-    setUser({ name: username, friends: ["Alice", "Bob"] })
-    setStage("profiles")
-  }
+    setUser({ name: username, friends: ['Alice', 'Bob'] });
+    setActiveProfile('Alice'); // or any default profile name
+    setStage('swipe');
+  };
+  
 
   const handleStartSwiping = (profileName) => {
     setActiveProfile(profileName)
-    setStage("swipe")
+    setActiveProfile('Alice'); // or any default profile name
+    setStage('swipe');
   }
 
   const handleCartClick = () => {
