@@ -186,8 +186,37 @@ function SwipePage({ user, onBack, onAddToGiftList }) {
   }
 
   return (
+
+    <>
+   <>
+  <div className="header-bar">
+    <div className="header-logo">
+      <img
+        src="https://cdn.discordapp.com/attachments/1373870449506652182/1375484922353160252/klaus_logo1.png?ex=68328468&is=683132e8&hm=b9cf880160fa98172d64b28a6991cd9c598fbf9881683d248411104fdb183a29&"
+        alt="Logo"
+        height="45"
+      />
+    </div>
+    <div className="header-cart">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        width="22"
+        height="28"
+        fill="white"
+      >
+        <path d="M22.713,4.077A2.993,2.993,0,0,0,20.41,3H4.242L4.2,2.649A3,3,0,0,0,1.222,0H1A1,1,0,0,0,1,2h.222a1,1,0,0,1,.993.883l1.376,11.7A5,5,0,0,0,8.557,19H19a1,1,0,0,0,0-2H8.557a3,3,0,0,1-2.82-2h11.92a5,5,0,0,0,4.921-4.113l.785-4.354A2.994,2.994,0,0,0,22.713,4.077ZM21.4,6.178l-.786,4.354A3,3,0,0,1,17.657,13H5.419L4.478,5H20.41A1,1,0,0,1,21.4,6.178Z"/>
+        <circle cx="7" cy="22" r="2"/>
+        <circle cx="17" cy="22" r="2"/>
+      </svg>
+    </div>
+  </div>
+</>
+
+    
     <div className="swipe-container">
-      <h2>Swiping as {user.name}</h2>
+      {/* Header Bar with Logo and Cart */}
+  
 
       <div className="swipe-card-container">
         {!showPrompt ? (
@@ -283,6 +312,7 @@ function SwipePage({ user, onBack, onAddToGiftList }) {
         </div>
       </div>
     </div>
+    </>
   )
 }
 
