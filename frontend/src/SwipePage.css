@@ -416,8 +416,8 @@ body {
 /* floating menu */
 .floating-menu-container {
   position: fixed;
-  bottom: 20px;
-  left: 20px;
+  bottom: 80px; /* increased from 20px to move it up */
+  left: 490px;   /* increased from 20px to move it right */
   z-index: 1000;
 }
 
@@ -425,7 +425,7 @@ body {
   width: 56px;
   height: 56px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #774c60 0%, #c88ea7 100%);
   border: none;
   cursor: pointer;
   display: flex;
