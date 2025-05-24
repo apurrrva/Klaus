@@ -70,6 +70,7 @@ body {
     margin: 0 auto;
     z-index: 1;
   }
+
   
   .swipe-card h3 {
     color: #524D4F; /* Dark gray text */
@@ -398,6 +399,8 @@ body {
   left: 0;
   right: 0;
 }
+
+
 
 .confetti-gif {
   position: fixed;
