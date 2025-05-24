@@ -53,13 +53,13 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 80px 25px 70px 25px; /* Extra padding for top (header) and bottom (buttons) */
+    padding: 80px 25px 0px 25px; 
     border-radius: 16px; /* Restore border radius */
     box-shadow: 0 0 30px rgba(82, 77, 79, 0.3);
     background-color: #FCF6ED; /* Off-white background */
     position: absolute;
-    top: 30px; /* Space below header */
-    bottom: 30px;
+    top: 30px; 
+    bottom: 0px;
     /* Set width instead of left/right positioning */
     width: 90%;
     max-width: 450px;
@@ -73,7 +73,7 @@ body {
   
   .swipe-card h3 {
     color: #524D4F; /* Dark gray text */
-    margin: 15px 0 10px 0;
+    /* margin: 15px 0 10px 0; */
     font-size: 24px;
     text-align: center;
   }
@@ -81,10 +81,9 @@ body {
   .swipe-card p {
     color: #785257; /* Mauve/burgundy text */
     text-align: center;
-    margin: 10px 0;
     font-size: 18px;
     line-height: 1.5;
-    padding: 0 10px;
+
   }
   
   .swipe-image {
@@ -97,59 +96,7 @@ body {
     box-shadow: 0 5px 15px rgba(82, 77, 79, 0.15);
   }
   
-  /* Button container positioned at bottom */
-  .button-container {
-    display: flex;
-    gap: 25px;
-    justify-content: center;
-    width: 100%;
-    padding: 20px 0;
-    position: absolute;
-    bottom: 80px;
-    left: 0;
-    /* background-color: rgba(212, 101, 110, 0.9); Semi-transparent rose/coral */
-    z-index: 20;
-  }
-  
-  .like-button {
-    padding: 15px 35px;
-    background-color: #FCF6ED; /* Off-white background */
-    color: #800000; /* Rose/coral text */
-    border: 2px solid #785257; /* Mauve/burgundy border */
-    border-radius: 50px;
-    cursor: pointer;
-    font-size: 16px;
-    font-weight: bold;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 8px rgba(82, 77, 79, 0.2);
-  }
-  
-  .like-button:hover {
-    background-color: #785257; /* Mauve/burgundy on hover */
-    color: #FCF6ED; /* Off-white text */
-    transform: translateY(-2px);
-    box-shadow: 0 6px 12px rgba(82, 77, 79, 0.3);
-  }
-  
-  .dislike-button {
-    padding: 15px 35px;
-    background-color: #FCF6ED; /* Off-white background */
-    color: #785257; /* Mauve/burgundy text */
-    border: 2px solid #524D4F; /* Dark gray border */
-    border-radius: 50px;
-    cursor: pointer;
-    font-size: 16px;
-    font-weight: bold;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 8px rgba(82, 77, 79, 0.2);
-  }
-  
-  .dislike-button:hover {
-    background-color: #524D4F; /* Dark gray on hover */
-    color: #FCF6ED; /* Off-white text */
-    transform: translateY(-2px);
-    box-shadow: 0 6px 12px rgba(82, 77, 79, 0.3);
-  }
+
   
   .yes-button {
     padding: 15px 35px;
@@ -249,32 +196,7 @@ body {
     text-align: center;
   }
   
-  .progress-container {
-    width: 90%;
-    max-width: 500px;
-    position: absolute;
-    bottom: 80px; /* Position above the buttons */
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 25;
-  }
-  
-  .progress-bar {
-    width: 100%;
-    height: 10px;
-    background-color: rgba(120, 82, 87, 0.3); /* Semi-transparent mauve/burgundy */
-    border-radius: 8px;
-    overflow: hidden;
-    border: 1px solid #785257; /* Mauve/burgundy border */
-    box-shadow: inset 0 2px 5px rgba(82, 77, 79, 0.1);
-  }
-  
-  .progress-fill {
-    height: 100%;
-    background-color: #FCF6ED; /* Off-white fill */
-    transition: width 0.3s ease;
-    border-radius: 6px;
-  }
+
   
   /* Additional styling for better visual hierarchy */
   .swipe-card:active {
@@ -348,22 +270,19 @@ body {
   }
 
 
- /* Your existing CSS styles */
-
-/* Card Navigation Styles */
 .card-nav {
+  position: absolute;
+  bottom: 20px;
   display: flex;
   justify-content: space-around;
   align-items: center;
-  /* padding: 20px 10px 15px 10px; */
-  border-top: 1px solid #f0f0f0;
-  margin-top: 25px;
   background: #822323;
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  border-radius: 0 0 15px 15px;
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+  max-width: 500px; /* ADDED: Match card width */
+  width: 100%;
+  z-index: 20;
+  /* margin-bottom: 40px; */
 }
 
 .card-nav-item {
@@ -439,7 +358,13 @@ body {
 
 /* Remove the padding-bottom from swipe-container since nav is now on card */
 .swipe-container {
-  padding-bottom: 20px;
+  padding-bottom: 0px;
 }
 
+.fixed-nav-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  width: 100%;
+}
 
