@@ -261,10 +261,11 @@ function SwipePage({ user, onBack, onCartClick}) {
       <img
         src="https://cdn.discordapp.com/attachments/1373870449506652182/1375484922353160252/klaus_logo1.png?ex=68328468&is=683132e8&hm=b9cf880160fa98172d64b28a6991cd9c598fbf9881683d248411104fdb183a29&"
         alt="Logo"
-        height="45"
+        height="50"
       />
     </div>
      <div className="header-cart" onClick={handleCartClick}>
+      
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
