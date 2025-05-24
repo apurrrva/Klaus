@@ -86,20 +86,20 @@ function IdeaBoardPage({ onBack }) {
 
       {/* Bottom Navigation Bar with Person Selector */}
       <div className="fixed-nav-container">
-        <div className="card-nav person-selector-nav">
-          <span className="person-nav-label">Viewing ideas for:</span>
-          <div className="person-nav-select-container">
-            <select
-              value={selectedPerson}
-              onChange={e => setSelectedPerson(e.target.value)}
-              className="person-nav-select"
-            >
-              <option value="Alice">Alice</option>
-              <option value="Bob">Bob</option>
-            </select>
-          </div>
-        </div>
-      </div>
+  <div className="card-nav person-selector-nav">
+    <span className="person-nav-label">Viewing ideas for:</span>
+    <div className="person-nav-select-container">
+      <select
+        value={selectedPerson}
+        onChange={e => setSelectedPerson(e.target.value)}
+        className="person-nav-select"
+      >
+        <option value="Alice">Alice</option>
+        <option value="Bob">Bob</option>
+      </select>
+    </div>
+  </div>
+</div>
     </div>
   );
 }

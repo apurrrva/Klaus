@@ -462,13 +462,9 @@ body {
 
 .card-nav.person-selector-nav {
   background: #822323;
-  min-height: 80px;        /* Thick nav bar */
-  max-width: 420px;
-  margin: 0 auto;
   width: 100%;
   display: flex;
   align-items: center;
-  padding: 0 24px;
   box-sizing: border-box;
 }
 
@@ -493,7 +489,6 @@ body {
 /* Style the select dropdown */
 .person-nav-select {
   font-size: 1.05em;
-  padding: 8px 16px;
   border-radius: 6px;
   border: 1px solid #fff;
   background: #822323;
@@ -519,6 +514,39 @@ body {
   margin-top: 10px;
   font-weight: normal;
   text-shadow: 0 4px 16px #e0c2ff44;
+}
+
+.card-nav.person-selector-nav {
+  background: #822323;
+  width: 100%;
+  max-width: 500px; /* Match swipe-card or cart nav width */
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  padding: 0 16px;
+}
+
+/* Style the select dropdown */
+.person-nav-select {
+  font-size: 1.05em;
+  border-radius: 6px;
+  border: 1.5px solid #fff;
+  background: #822323;
+  font-weight: 500;
+  color: #fff;
+  min-width: 120px;
+  margin-left: 12px;
+  padding: 8px 16px;
+  box-shadow: none;
+  appearance: none;
+  /* Optional: Add a caret if you want the dropdown arrow white */
+  background-image: url("data:image/svg+xml,%3Csvg fill='white' height='18' viewBox='0 0 24 24' width='18' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 18px 18px;
 }
 
 
