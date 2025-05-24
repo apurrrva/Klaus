@@ -5,15 +5,17 @@ import './SwipePage.css'; // Import the CSS file
 function SwipePage({ user, onBack, onCartClick }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [showConfetti, setShowConfetti] = useState(false);
-  const [showSuccess, setShowSuccess] = useState(false); // State for success message
+  const [showSuccess, setShowSuccess] = useState(false);
   const [index, setIndex] = useState(0);
   const [swipeDirection, setSwipeDirection] = useState(null);
   const cardRef = useRef(null);
   const startXRef = useRef(0);
+  const startYRef = useRef(0);
   const currentXRef = useRef(0);
   const [isDragging, setIsDragging] = useState(false);
   const [swipeOffset, setSwipeOffset] = useState(0);
-  const swipeThreshold = 100; // Minimum distance to trigger a swipe action
+  const swipeThreshold = 100;
+  const touchSlop = 10;
 
   const currentItem = fakeItems[index];
 
@@ -26,34 +28,27 @@ function SwipePage({ user, onBack, onCartClick }) {
   const handleOccasionSelect = (occasion) => {
     console.log(`Selected occasion: ${occasion}`);
     setIsMenuOpen(false);
-    // Add your occasion filtering logic here
   };
 
   const FloatingMenu = () => (
     <div className="floating-menu-container">
       <div className={`occasions-menu ${isMenuOpen ? 'open' : 'closed'}`}>
         <div className="occasion-item" onClick={() => handleOccasionSelect('birthday')}>
-          <span className="occasion-emoji">🎂</span>
           <span className="occasion-text">Birthday</span>
         </div>
         <div className="occasion-item" onClick={() => handleOccasionSelect('christmas')}>
-          <span className="occasion-emoji">🎄</span>
           <span className="occasion-text">Christmas</span>
         </div>
         <div className="occasion-item" onClick={() => handleOccasionSelect('baby-shower')}>
-          <span className="occasion-emoji">👶</span>
           <span className="occasion-text">Baby Shower</span>
         </div>
         <div className="occasion-item" onClick={() => handleOccasionSelect('wedding')}>
-          <span className="occasion-emoji">💒</span>
           <span className="occasion-text">Wedding</span>
         </div>
         <div className="occasion-item" onClick={() => handleOccasionSelect('anniversary')}>
-          <span className="occasion-emoji">💕</span>
           <span className="occasion-text">Anniversary</span>
         </div>
         <div className="occasion-item" onClick={() => handleOccasionSelect('graduation')}>
-          <span className="occasion-emoji">🎓</span>
           <span className="occasion-text">Graduation</span>
         </div>
       </div>
@@ -71,27 +66,24 @@ function SwipePage({ user, onBack, onCartClick }) {
   // Handle center button click
   const handleCenterButtonClick = () => {
     setShowConfetti(true);
-    setShowSuccess(true); // Show success message
+    setShowSuccess(true);
 
-    // Reset card position to avoid visual glitches
     if (cardRef.current) {
       cardRef.current.style.transition = "none";
       cardRef.current.style.transform = "translateX(0) rotate(0)";
     }
 
-    // Hide confetti and success message after 5 seconds, then move to next item
     setTimeout(() => {
       setShowConfetti(false);
       setShowSuccess(false);
       setSwipeOffset(0);
       setSwipeDirection(null);
-      nextItem(); // Move to the next card
+      nextItem();
     }, 3000);
   };
 
   const handleNavigation = (page) => {
     console.log(`Navigating to ${page}`);
-    // Add your navigation logic here
   };
   
   const handleCartClick = () => {
@@ -99,7 +91,6 @@ function SwipePage({ user, onBack, onCartClick }) {
       onCartClick();
     } else {
       console.log("Navigate to cart page");
-      // Default behavior if no onCartClick prop is provided
     }
   };
 
@@ -134,9 +125,13 @@ function SwipePage({ user, onBack, onCartClick }) {
   };
 
   const nextItem = () => {
-    // Reset swipe state
     setSwipeOffset(0);
     setSwipeDirection(null);
+
+    // Reset scroll position to top
+    if (cardRef.current) {
+      cardRef.current.scrollTop = 0;
+    }
 
     if (index < fakeItems.length - 1) {
       setIndex(index + 1);
@@ -146,34 +141,37 @@ function SwipePage({ user, onBack, onCartClick }) {
     }
   };
 
-  // Touch and mouse event handlers - memoized with useCallback
-  const handleStart = useCallback((clientX) => {
-    if (showSuccess) return; // Prevent dragging during success message
+  // Touch and mouse event handlers
+  const handleStart = useCallback((clientX, clientY) => {
+    if (showSuccess) return;
     setIsDragging(true);
     startXRef.current = clientX;
+    startYRef.current = clientY;
     currentXRef.current = clientX;
 
-    // Cancel any ongoing animations
     if (cardRef.current) {
       cardRef.current.style.transition = "";
     }
   }, [showSuccess]);
 
   const handleMove = useCallback(
-    (clientX) => {
+    (clientX, clientY) => {
       if (!isDragging) return;
 
       currentXRef.current = clientX;
       const deltaX = currentXRef.current - startXRef.current;
-      setSwipeOffset(deltaX);
+      const deltaY = clientY - startYRef.current;
 
-      // Determine swipe direction for visual feedback
-      if (deltaX > 20) {
-        setSwipeDirection("right");
-      } else if (deltaX < -20) {
-        setSwipeDirection("left");
-      } else {
-        setSwipeDirection(null);
+      if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > touchSlop) {
+        setSwipeOffset(deltaX);
+
+        if (deltaX > 20) {
+          setSwipeDirection("right");
+        } else if (deltaX < -20) {
+          setSwipeDirection("left");
+        } else {
+          setSwipeDirection(null);
+        }
       }
     },
     [isDragging],
@@ -186,13 +184,10 @@ function SwipePage({ user, onBack, onCartClick }) {
     const deltaX = currentXRef.current - startXRef.current;
 
     if (deltaX > swipeThreshold) {
-      // Swiped right - like
       handleLike();
     } else if (deltaX < -swipeThreshold) {
-      // Swiped left - dislike
       handleDislike();
     } else {
-      // Not enough movement, reset position
       animateReset();
     }
   }, [isDragging, swipeThreshold]);
@@ -200,14 +195,14 @@ function SwipePage({ user, onBack, onCartClick }) {
   // Touch event handlers
   const handleTouchStart = useCallback(
     (e) => {
-      handleStart(e.touches[0].clientX);
+      handleStart(e.touches[0].clientX, e.touches[0].clientY);
     },
     [handleStart],
   );
 
   const handleTouchMove = useCallback(
     (e) => {
-      handleMove(e.touches[0].clientX);
+      handleMove(e.touches[0].clientX, e.touches[0].clientY);
     },
     [handleMove],
   );
@@ -219,14 +214,14 @@ function SwipePage({ user, onBack, onCartClick }) {
   // Mouse event handlers
   const handleMouseDown = useCallback(
     (e) => {
-      handleStart(e.clientX);
+      handleStart(e.clientX, e.clientY);
     },
     [handleStart],
   );
 
   const handleMouseMove = useCallback(
     (e) => {
-      handleMove(e.clientX);
+      handleMove(e.clientX, e.clientY);
     },
     [handleMove],
   );
@@ -235,7 +230,6 @@ function SwipePage({ user, onBack, onCartClick }) {
     handleEnd();
   }, [handleEnd]);
 
-  // Add and remove mouse move/up listeners
   useEffect(() => {
     if (isDragging) {
       window.addEventListener("mousemove", handleMouseMove);
@@ -250,8 +244,7 @@ function SwipePage({ user, onBack, onCartClick }) {
 
   if (!currentItem) return <div>No more items to swipe!</div>;
 
-  // Calculate rotation based on swipe offset
-  const rotation = swipeOffset / 20; // Adjust divisor to control rotation amount
+  const rotation = swipeOffset / 20;
   const cardStyle = {
     transform: `translateX(${swipeOffset}px) rotate(${rotation}deg)`,
     transition: isDragging ? "" : "transform 0.3s ease-out",
@@ -259,19 +252,15 @@ function SwipePage({ user, onBack, onCartClick }) {
 
   return (
     <>
-
-   <>
-  <div className="header-bar">
-    <div className="header-logo">
-      <img
-        src="https://cdn.discordapp.com/attachments/1373870449506652182/1375484922353160252/klaus_logo1.png?ex=68328468&is=683132e8&hm=b9cf880160fa98172d64b28a6991cd9c598fbf9881683d248411104fdb183a29&"
-        alt="Logo"
-        height="50"
-      />
-    </div>
-     <div className="header-cart" onClick={handleCartClick}>
-      
-
+      <div className="header-bar">
+        <div className="header-logo">
+          <img
+            src="https://cdn.discordapp.com/attachments/1373870449506652182/1375484922353160252/klaus_logo1.png?ex=68328468&is=683132e8&hm=b9cf880160fa98172d64b28a6991cd9c598fbf9881683d248411104fdb183a29&"
+            alt="Logo"
+            height="50"
+          />
+        </div>
+        <div className="header-cart" onClick={handleCartClick}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
@@ -305,9 +294,33 @@ function SwipePage({ user, onBack, onCartClick }) {
             ) : (
               <>
                 <img className="swipe-image" src={currentItem.image || "/placeholder.svg"} alt={currentItem.name} />
-                <h3>{currentItem.name}</h3>
-                <p className="price">${currentItem.price}</p>  
-                <p>{currentItem.description}</p>
+                <div className="card-content">
+                  <h3>{currentItem.name}</h3>
+                  <p className="price">${currentItem.price}</p>  
+                  <p>{currentItem.description}</p>
+                  <div className="reviews-section">
+                    <h4>Reviews</h4>
+                    {currentItem.reviews && currentItem.reviews.length > 0 ? (
+                      currentItem.reviews.map((review, idx) => (
+                        <div key={idx} className="review-item">
+                          <div className="review-avatar">{review.user[0]}</div>
+                          <div className="review-content">
+                            <p className="username">{review.user}</p>
+                            <p className="comment">{review.comment}</p>
+                            <div className="rating">
+                              {Array.from({ length: review.rating }, (_, i) => (
+                                <span key={i} className="star">★</span>
+                              ))}
+                              <span>({review.rating}/5)</span>
+                            </div>
+                          </div>
+                        </div>
+                      ))
+                    ) : (
+                      <p>No reviews yet.</p>
+                    )}
+                  </div>
+                </div>
                 {swipeDirection === "right" && <div className="like-indicator">LIKE</div>}
                 {swipeDirection === "left" && <div className="dislike-indicator">NOPE</div>}
               </>
@@ -383,9 +396,7 @@ function SwipePage({ user, onBack, onCartClick }) {
       </div>
       <FloatingMenu />
     </>
-    </>
   );
 }
-
 
 export default SwipePage;
