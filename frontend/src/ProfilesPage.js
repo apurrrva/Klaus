@@ -1,24 +1,55 @@
 import React from 'react';
+import './Profiles.css'; 
+
+import bowIcon from './assets/BOW.svg'
+import logo from './assets/klaus_logo1.png'
 
 function ProfilesPage({ user, onStartSwiping }) {
   return (
-    <div style={{ textAlign: 'center' }}>
-      <h1>Welcome, {user.name}</h1>
-      <h2>Your Profile</h2>
-      <button onClick={() => onStartSwiping(user.name)}>Start Swiping</button>
+    <div className = "main-container">
+      <div className = "header">
+        <img className = "header-logo" src = {logo} alt = "logo"/>
+      </div>
 
-      <h2>Your Friends</h2>
-      {user.friends.map(friend => (
-        <div key={friend} style={{ margin: '10px' }}>
-          <strong>{friend}</strong>
-          <div>
-            <button onClick={() => onStartSwiping(friend)}>Start Swiping</button>
-            {/* In the future, add Edit Preferences or View Giftlist buttons */}
-          </div>
+      
+      <div className = "profile-div">
+        <div className = "pfp">
+          pfp here
         </div>
-      ))}
+        <div className = "name">
+          <h1> {user.name} </h1>
+        </div>
+        <div className = "details">
+          <h2> Lists made: X </h2>
+        </div>
+      </div>
+
+      <div className = "giftlists">
+        {user.friends.map (friend => (
+          <div key = {friend} className = "friends">
+            <div className = "icon">
+              <img className = "bow-icon" src = {bowIcon} alt = "bow-icon" />
+            </div>
+            <div className = "friendname">
+              {friend}
+            </div>
+            <div className = "button1">
+              <button onClick = {() => onStartSwiping(friend)}> Start Swiping!</button>
+            </div>
+            <div className = "button2">
+              <button> View Giftlist </button>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <div className = "new-list">
+        <button> Create new list </button>
+      </div>
+
     </div>
   );
 }
+
 
 export default ProfilesPage;
