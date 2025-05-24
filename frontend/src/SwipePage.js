@@ -2,9 +2,77 @@ import React, { useState, useRef, useEffect, useCallback } from 'react';
 import fakeItems from './data/fakeItems';
 import './SwipePage.css'; // Import the CSS file
 
-function SwipePage({ user, onBack, onAddToGiftList }) {
+
+
+
+function SwipePage({ user, onBack}) {
+
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  // Add this function to handle menu toggle
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+
+  // Add this function to handle occasion selection
+  const handleOccasionSelect = (occasion) => {
+    console.log(`Selected occasion: ${occasion}`);
+    setIsMenuOpen(false);
+    // Add your occasion filtering logic here
+  };
+
+  const FloatingMenu = () => (
+    <div className="floating-menu-container">
+      
+      <div className={`occasions-menu ${isMenuOpen ? 'open' : 'closed'}`}>
+        <div className="occasion-item" onClick={() => handleOccasionSelect('birthday')}>
+          <span className="occasion-emoji">🎂</span>
+          <span className="occasion-text">Birthday</span>
+        </div>
+        <div className="occasion-item" onClick={() => handleOccasionSelect('christmas')}>
+          <span className="occasion-emoji">🎄</span>
+          <span className="occasion-text">Christmas</span>
+        </div>
+        <div className="occasion-item" onClick={() => handleOccasionSelect('baby-shower')}>
+          <span className="occasion-emoji">👶</span>
+          <span className="occasion-text">Baby Shower</span>
+        </div>
+        <div className="occasion-item" onClick={() => handleOccasionSelect('wedding')}>
+          <span className="occasion-emoji">💒</span>
+          <span className="occasion-text">Wedding</span>
+        </div>
+        <div className="occasion-item" onClick={() => handleOccasionSelect('anniversary')}>
+          <span className="occasion-emoji">💕</span>
+          <span className="occasion-text">Anniversary</span>
+        </div>
+        <div className="occasion-item" onClick={() => handleOccasionSelect('graduation')}>
+          <span className="occasion-emoji">🎓</span>
+          <span className="occasion-text">Graduation</span>
+        </div>
+      </div>
+      
+      <button 
+        className={`floating-menu-button ${isMenuOpen ? 'open' : ''}`}
+        onClick={toggleMenu}
+      >
+        <svg className="menu-icon" viewBox="0 0 24 24">
+          <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+        </svg>
+      </button>
+    </div>
+  );
+
+  const [showConfetti, setShowConfetti] = useState(false);
+
+  // Handle center button click
+  const handleCenterButtonClick = () => {
+    setShowConfetti(true);
+
+    // Hide confetti after 3 seconds (adjust as needed)
+    setTimeout(() => setShowConfetti(false), 3000);
+  };
+  
   const [index, setIndex] = useState(0)
-  const [showPrompt, setShowPrompt] = useState(false)
   const [swipeDirection, setSwipeDirection] = useState(null)
 
   // Swipe state
@@ -45,22 +113,13 @@ function SwipePage({ user, onBack, onAddToGiftList }) {
   }
 
   const handleLike = () => {
-    animateSwipe("right", () => {
-      setShowPrompt(true)
-    })
+    animateSwipe("right", nextItem) // Just go to next item
   }
 
   const handleDislike = () => {
     animateSwipe("left", nextItem)
   }
 
-  const addToGiftList = (add) => {
-    if (add && onAddToGiftList) {
-      onAddToGiftList(currentItem)
-    }
-    setShowPrompt(false)
-    nextItem()
-  }
 
   const nextItem = () => {
     // Reset swipe state
@@ -178,8 +237,7 @@ function SwipePage({ user, onBack, onAddToGiftList }) {
 
   if (!currentItem) return <div>No more items to swipe!</div>
 
-  // Calculate rotation based on swipe offset
-  const rotation = swipeOffset / 20 // Adjust divisor to control rotation amount
+  const rotation = swipeOffset / 20
   const cardStyle = {
     transform: `translateX(${swipeOffset}px) rotate(${rotation}deg)`,
     transition: isDragging ? "" : "transform 0.3s ease-out",
@@ -214,12 +272,8 @@ function SwipePage({ user, onBack, onAddToGiftList }) {
 </>
 
     
-    <div className="swipe-container">
-      {/* Header Bar with Logo and Cart */}
-  
-
-      <div className="swipe-card-container">
-        {!showPrompt ? (
+<div className="swipe-container">
+        <div className="swipe-card-container">
           <div
             ref={cardRef}
             className="swipe-card"
@@ -231,32 +285,26 @@ function SwipePage({ user, onBack, onAddToGiftList }) {
           >
             <img className="swipe-image" src={currentItem.image || "/placeholder.svg"} alt={currentItem.name} />
             <h3>{currentItem.name}</h3>
+            <p className="price">{currentItem.price}</p>  
             <p>{currentItem.description}</p>
-
-            {/* Swipe indicators */}
             {swipeDirection === "right" && <div className="like-indicator">LIKE</div>}
             {swipeDirection === "left" && <div className="dislike-indicator">NOPE</div>}
           </div>
-        ) : (
-          <div className="prompt-container">
-            <p>Add to gift list?</p>
-            <div className="button-container">
-              <button className="yes-button" onClick={() => addToGiftList(true)}>
-                Yes
-              </button>
-              <button className="no-button" onClick={() => addToGiftList(false)}>
-                No
-              </button>
-            </div>
-          </div>
-        )}
-      </div>
+        </div>
 
       <img
-    src="https://cdn.discordapp.com/attachments/1373870449506652182/1375739723850453104/cat.gif?ex=6832c8f6&is=68317776&hm=4e40beee3f787ab45e464d907a049634702b031f1483d1f94f9047746cc5b684&"
+    src="https://cdn.discordapp.com/attachments/1373870449506652182/1375792436001116191/cat.gif?ex=6832fa0d&is=6831a88d&hm=26dadeac4d528d9dc52a127f87e35dbb840f419e472fdfc65797166f75fc95e8&"
     alt="Dancing Cat"
     className="cat-gif"
   />
+  {showConfetti && (
+        <img
+          src="/assets/confetti2.gif"
+          alt="Confetti celebration"
+          className="confetti-gif"
+          
+        />
+      )}
 
 
       <div className="fixed-nav-container">
@@ -277,7 +325,7 @@ function SwipePage({ user, onBack, onAddToGiftList }) {
             </div>
           </div>
 
-          <div className="card-nav-item card-center-item" onClick={() => handleNavigation("swipe")}>
+          <div className="card-nav-item card-center-item" onClick={() => handleCenterButtonClick()}>
             <div className="card-nav-icon card-center-icon">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -312,6 +360,7 @@ function SwipePage({ user, onBack, onAddToGiftList }) {
         </div>
       </div>
     </div>
+    <FloatingMenu />
     </>
   )
 }

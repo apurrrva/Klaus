@@ -6,7 +6,7 @@ import ProfilesPage from './ProfilesPage';
 import SwipePage from './SwipePage';
 
 function App() {
-  const [stage, setStage] = useState('landing');
+  const [stage, setStage] = useState('login');
   const [user, setUser] = useState(null);
   const [activeProfile, setActiveProfile] = useState(null); // whose profile is being swiped
 
@@ -21,7 +21,8 @@ function App() {
 
   const handleLogin = (username) => {
     setUser({ name: username, friends: ['Alice', 'Bob'] });
-    setStage('profiles');
+    setActiveProfile('Alice'); // or any default profile name
+    setStage('swipe');
   };
 
   const handleStartSwiping = (profileName) => {

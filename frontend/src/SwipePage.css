@@ -398,3 +398,116 @@ body {
   left: 0;
   right: 0;
 }
+
+.confetti-gif {
+  position: fixed;
+  bottom: 65px;
+  left: 465px;
+  width: 35vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 9999;
+}
+
+
+/* floating menu */
+.floating-menu-container {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  z-index: 1000;
+}
+
+.floating-menu-button {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
+  transform-origin: center;
+}
+
+.floating-menu-button.open {
+  transform: rotate(45deg);
+}
+
+.floating-menu-button:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+}
+
+.floating-menu-button.open:hover {
+  transform: rotate(45deg) scale(1.1);
+}
+
+.menu-icon {
+  width: 24px;
+  height: 24px;
+  fill: white;
+  position: relative;
+  
+}
+
+.occasions-menu {
+  position: absolute;
+  bottom: 70px;
+  left: 0;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  transform-origin: bottom left;
+  transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.occasions-menu.closed {
+  opacity: 0;
+  transform: scale(0) translateY(20px);
+  pointer-events: none;
+}
+
+.occasions-menu.open {
+  opacity: 1;
+  transform: scale(1) translateY(0);
+}
+
+.occasion-item {
+  padding: 12px 20px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 160px;
+}
+
+.occasion-item:hover {
+  background-color: #f5f5f5;
+}
+
+.occasion-item:first-child {
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+}
+
+.occasion-item:last-child {
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
+}
+
+.occasion-emoji {
+  font-size: 18px;
+}
+
+.occasion-text {
+  font-size: 14px;
+  color: #333;
+  font-weight: 500;
+}
