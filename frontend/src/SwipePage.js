@@ -383,7 +383,9 @@ function SwipePage({ user, onBack, onCartClick }) {
       </div>
       <FloatingMenu />
     </>
+    </>
   );
 }
+
 
 export default SwipePage;
