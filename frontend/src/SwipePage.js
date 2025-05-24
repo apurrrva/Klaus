@@ -3,7 +3,7 @@ import fakeItems from './data/fakeItems';
 import './SwipePage.css'; // Import the CSS file
 
 
-function SwipePage({ user, onBack, onCartClick ,onAddToGiftList, onIdeaBoard}) {
+function SwipePage({ user, onBack, onCartClick ,onAddToGiftList, onIdeaBoard, onProfilesClick}) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [showPrompt, setShowPrompt] = useState(false)
   const [showConfetti, setShowConfetti] = useState(false);
@@ -100,6 +100,15 @@ function SwipePage({ user, onBack, onCartClick ,onAddToGiftList, onIdeaBoard}) {
   const handleIdeaBoard = () => {
     if (onIdeaBoard) {
       onIdeaBoard()
+    } else {
+      console.log("Navigate to idea board")
+      // Default behavior if no onCartClick prop is provided
+    }
+  };
+
+  const handleProfilesPage = () => {
+    if (onProfilesClick) {
+      onProfilesClick()
     } else {
       console.log("Navigate to idea board")
       // Default behavior if no onCartClick prop is provided
@@ -395,7 +404,7 @@ function SwipePage({ user, onBack, onCartClick ,onAddToGiftList, onIdeaBoard}) {
               </div>
             </div>
 
-            <div className="card-nav-item" onClick={() => handleNavigation("profile")}>
+            <div className="card-nav-item" onClick={handleProfilesPage}>
               <div className="card-nav-icon">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="white">
                   <path d="M12,12A6,6,0,1,0,6,6,6.006,6.006,0,0,0,12,12ZM12,2A4,4,0,1,1,8,6,4,4,0,0,1,12,2Z" />

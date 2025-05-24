@@ -77,6 +77,7 @@ function App() {
         onBack={() => setStage("profiles")}
         onCartClick={handleCartClick}
         onIdeaBoard={() => setStage("ideaBoard")}
+        onProfilesClick={() => setStage("profiles")}
         onAddToGiftList={handleAddToGiftList}
       />
     )
