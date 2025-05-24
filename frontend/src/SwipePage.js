@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import fakeItems from './data/fakeItems';
 
 function SwipePage({ user, onBack, onAddToGiftList }) {
@@ -134,27 +134,36 @@ function SwipePage({ user, onBack, onAddToGiftList }) {
     handleStart(e.clientX);
   };
 
-  const handleMouseMove = (e) => {
-    handleMove(e.clientX);
+  // eslint-disable-next-line
+  const YourComponent = ({ handleMove, handleEnd, isDragging }) => {
+    const handleMouseMove = useCallback(
+      (e) => {
+        handleMove(e.clientX);
+      },
+      [handleMove]
+    );
+  
+    const handleMouseUp = useCallback(
+      () => {
+        handleEnd();
+      },
+      [handleEnd]
+    );
+
+    useEffect(() => {
+      if (isDragging) {
+        window.addEventListener('mousemove', handleMouseMove);
+        window.addEventListener('mouseup', handleMouseUp);
+      }
+  
+      return () => {
+        window.removeEventListener('mousemove', handleMouseMove);
+        window.removeEventListener('mouseup', handleMouseUp);
+      };
+    }, [isDragging, handleMouseMove, handleMouseUp]);
+  
+    // ...rest of component
   };
-
-  const handleMouseUp = () => {
-    handleEnd();
-  };
-
-  // Add and remove mouse move/up listeners
-  useEffect(() => {
-    if (isDragging) {
-      window.addEventListener('mousemove', handleMouseMove);
-      window.addEventListener('mouseup', handleMouseUp);
-    }
-    
-    return () => {
-      window.removeEventListener('mousemove', handleMouseMove);
-      window.removeEventListener('mouseup', handleMouseUp);
-    };
-  }, [isDragging]);
-
   if (!currentItem) return <div>No more items to swipe!</div>;
 
   // Calculate rotation based on swipe offset

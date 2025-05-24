@@ -6,17 +6,26 @@ export default function SignupPage({ onBack, onSignupSuccess }) {
 
 
   // Basic form submission handler (customize as needed for your backend)
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // TODO: Replace this with actual signup logic (API call)
-    
-
-
-    // Simulate successful signup and redirect to login page
-
-
-    if (onSignupSuccess) {
-      onSignupSuccess();
+  
+    try {
+      const response = await fetch('/api/signup/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ username, password }),
+      });
+  
+      const data = await response.json();
+      if (response.ok && data.success) {
+        if (onSignupSuccess) onSignupSuccess();
+      } else {
+        alert(data.error || 'Signup failed');
+      }
+    } catch (err) {
+      alert('Network error');
     }
   };
 
