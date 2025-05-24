@@ -441,5 +441,21 @@ body {
 .swipe-container {
   padding-bottom: 20px;
 }
-
-
+.header-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #822323;
+  position: absolute;
+  top: 0;
+  /* REMOVE left: 0; right: 0; */
+  width: 100%;
+  max-width: 468px; /* match swipe-container or desired phone width */
+  margin: 0 auto; /* center horizontally */
+  border-radius: 15px 15px 0 0;
+  border-bottom: 1px solid #f0f0f0;
+  padding: 12px 16px;
+  z-index: 1000;
+  left: 0;
+  right: 0;
+}
