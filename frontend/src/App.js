@@ -8,6 +8,7 @@ import ProfilesPage from "./ProfilesPage"
 import SwipePage from "./SwipePage"
 import CartPage from "./cart-page.js"
 import IdeaBoardPage from "./IdeaBoardPage" // <-- Add this import!
+import FriendsPage from "./FriendsPage" 
 import React from 'react';
 
 function App() {
@@ -77,6 +78,7 @@ function App() {
         onBack={() => setStage("profiles")}
         onCartClick={handleCartClick}
         onIdeaBoard={() => setStage("ideaBoard")}
+        onFriendsPage={() => setStage("friendsPage")}
         onProfilesClick={() => setStage("profiles")}
         onAddToGiftList={handleAddToGiftList}
       />
@@ -95,6 +97,18 @@ function App() {
     return (
       <IdeaBoardPage
         onBack={() => setStage("swipe")} // <-- so we can go backkk to the swipe ig 
+      />
+    )
+
+    if (stage === "friendsPage")
+    return (
+      <FriendsPage
+        user={user}
+        onBack={() => setStage("swipe")}
+        onCartClick={handleCartClick}
+        onAddToGiftList={handleAddToGiftList}
+        onIdeaBoard={() => setStage("ideaBoard")}
+        onProfilesClick={() => setStage("profiles")}
       />
     )
 
