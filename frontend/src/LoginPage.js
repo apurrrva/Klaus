@@ -52,7 +52,7 @@ function LoginPage({ onLogin }) {
         {/* Welcome text */}
         <div style={styles.welcomeSection}>
           <img
-  src="https://cdn.discordapp.com/attachments/1184079102039306271/1375860424158744717/saaddd.png?ex=6833395f&is=6831e7df&hm=3a6d1f95726ea34493ba435afa801e291ab7a0a1091647567153147a8c9186b7&"
+  src="https://cdn.discordapp.com/attachments/1373870449506652182/1376054659856339024/pfp.png?ex=6833ee44&is=68329cc4&hm=da068b91e1997639a45b6cf8ee5b599aa968d3ccd8fc238ec6c45eb126c85e84&"
   alt="Claussa Logo"
   style={styles.claussaImage}
 />
@@ -152,9 +152,9 @@ const styles = {
     position: "relative",
   },
   claussaImage: {
-  width: "190px",
+  width: "220px",
   height: "auto",
-  marginBottom: "20px",
+  marginBottom: "0px",
   borderRadius: "5px",
 },
 eyeIcon: {
