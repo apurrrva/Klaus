@@ -464,47 +464,54 @@ html {
 }
 
 .connect-button {
+  background-color: transparent;
+  color: inherit;
+  border: 2px solid currentColor;
+  padding: 0.75rem 1.5rem;
+  border-radius: 9999px;
+  cursor: pointer;
+  font-weight: 600;
   display: flex;
   align-items: center;
-  gap: 8px;
-  padding: 10px 15px;
-  color: #fcf6ed; /* Off-white text */
-  border: none;
-  border-radius: 20px;
-  font-size: 14px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 8px rgba(82, 77, 79, 0.2);
-}
-.connect-button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 12px rgba(82, 77, 79, 0.3);
+  gap: 0.5rem;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
+.connect-button:hover {
+  background-color: rgba(0, 0, 0, 0.05); /* subtle highlight */
+}
+
+
 .connect-button.instagram {
-  background-color: #e4405f; /* Instagram color */
+  background: linear-gradient(45deg, #feda75, #fa7e1e, #d62976, #962fbf, #4f5bd5);
+  color: white;
+  border: none;
 }
 
 .connect-button.instagram:hover {
-  background-color: #c13584;
+  filter: brightness(1.1);
 }
 
 .connect-button.facebook {
-  background-color: #1877f2; /* Facebook color */
+  background: linear-gradient(45deg, #1877f2, #3b5998);
+  color: white;
+  border: none;
 }
 
 .connect-button.facebook:hover {
-  background-color: #145dbf;
+  filter: brightness(1.1);
 }
 
 .connect-button.contacts {
-  background-color: #34c759; /* Contacts color */
+  background: linear-gradient(45deg, #7c9c8b, #056c3e);
+  color: white;
+  border: none;
 }
 
 .connect-button.contacts:hover {
-  background-color: #2ea84a;
+  filter: brightness(1.1);
 }
+
 
 .connect-emoji {
   font-size: 16px;
