@@ -68,7 +68,6 @@ html {
 }
 
 @media (max-width: 480px) {
-
   .card-nav {
     padding: 0px;
   }
@@ -481,7 +480,6 @@ html {
   background-color: rgba(0, 0, 0, 0.05); /* subtle highlight */
 }
 
-
 .connect-button.instagram {
   background: linear-gradient(45deg, #feda75, #fa7e1e, #d62976, #962fbf, #4f5bd5);
   color: white;
@@ -511,7 +509,6 @@ html {
 .connect-button.contacts:hover {
   filter: brightness(1.1);
 }
-
 
 .connect-emoji {
   font-size: 16px;
@@ -930,6 +927,126 @@ html {
   color: #785257;
 }
 
+/* Registry Items List Styles */
+.registry-items-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.registry-item-card {
+  background-color: #fcf6ed;
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 2px 10px rgba(82, 77, 79, 0.3);
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  position: relative;
+}
+
+.registry-item-image {
+  width: 100%;
+  height: 200px;
+  border-radius: 12px;
+  overflow: hidden;
+  background-color: #e0e0e0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.registry-item-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.registry-item-details {
+  flex: 1;
+}
+
+.registry-item-name {
+  margin: 0 0 10px 0;
+  font-size: 20px;
+  font-weight: bold;
+  color: #524d4f;
+}
+
+.registry-item-description {
+  margin: 0 0 10px 0;
+  font-size: 16px;
+  color: #785257;
+  line-height: 1.4;
+}
+
+.registry-item-price {
+  margin: 0 0 15px 0;
+  font-size: 18px;
+  font-weight: bold;
+  color: #800000;
+}
+
+.registry-item-reviews {
+  margin-top: 15px;
+}
+
+.registry-item-reviews h4 {
+  margin: 0 0 10px 0;
+  font-size: 16px;
+  font-weight: bold;
+  color: #524d4f;
+}
+
+.review-item {
+  background-color: rgba(120, 82, 87, 0.05);
+  border-radius: 8px;
+  padding: 12px;
+  margin-bottom: 10px;
+}
+
+.review-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+.review-user {
+  font-weight: bold;
+  color: #524d4f;
+  font-size: 14px;
+}
+
+.review-rating {
+  font-size: 14px;
+}
+
+.review-comment {
+  margin: 0;
+  font-size: 14px;
+  color: #785257;
+  font-style: italic;
+}
+
+.add-to-cart-button {
+  background-color: #800000;
+  color: #fcf6ed;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+  align-self: flex-start;
+}
+
+.add-to-cart-button:hover {
+  background-color: #6b1c1c;
+  transform: translateY(-2px);
+}
+
 .registry-placeholder {
   width: 100%;
   display: flex;
@@ -1064,6 +1181,18 @@ html {
 
   .registry-placeholder-card h3 {
     font-size: 18px;
+  }
+
+  .registry-item-name {
+    font-size: 18px;
+  }
+
+  .registry-item-description {
+    font-size: 14px;
+  }
+
+  .registry-item-price {
+    font-size: 16px;
   }
 }
 
@@ -1222,6 +1351,31 @@ html {
   }
 
   .registry-placeholder-card p {
+    font-size: 14px;
+  }
+
+  .registry-item-card {
+    padding: 15px;
+  }
+
+  .registry-item-image {
+    height: 150px;
+  }
+
+  .registry-item-name {
+    font-size: 16px;
+  }
+
+  .registry-item-description {
+    font-size: 13px;
+  }
+
+  .registry-item-price {
+    font-size: 14px;
+  }
+
+  .add-to-cart-button {
+    padding: 10px 16px;
     font-size: 14px;
   }
 }
