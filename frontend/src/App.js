@@ -69,7 +69,15 @@ function App() {
   if (stage === "landing") return <LandingPage onSelectOption={handleOptionSelect} />
   if (stage === "login") return <LoginPage onLogin={handleLogin} />
   if (stage === "signup") return <SignupPage onSignup={handleLogin} />
-  if (stage === "profiles") return <ProfilesPage user={user} onStartSwiping={handleStartSwiping} />
+  if (stage === "profiles") 
+    return (
+      <ProfilesPage 
+        user={user} 
+        onStartSwiping={handleStartSwiping} 
+        onBack={ () => setStage("swipe") }
+      
+      />
+    )
   if (stage === "swipe")
     return (
       <SwipePage
