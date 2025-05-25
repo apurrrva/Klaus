@@ -352,6 +352,7 @@ html {
   max-width: 500px;
   width: 100%;
   z-index: 20;
+  height: 55px;            
 }
 
 .card-nav-item {
@@ -519,48 +520,84 @@ html {
 
 
 
-.scard-nav.person-selector-nav {
-  background: #822323;
-  width: 100%;
+.card-nav.person-selector-nav {
   display: flex;
   align-items: center;
+  padding: 0 16px;
+  width: 100%;
+  max-width: 500px;
+  background: #822323;
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+  margin: 0 auto;
   box-sizing: border-box;
 }
+
 
 /* Label forced to the left */
 .person-nav-label {
   color: #fff;
   font-weight: 600;
   font-size: 1.1em;
-  flex: 1;
+  margin-right: 20px;    /* Add spacing between label and select */
+  flex: 0 0 auto;        /* Do NOT let it grow or shrink */
   text-align: left;
   letter-spacing: 0.01em;
+  white-space: nowrap;   /* Prevent wrapping if you wish */
 }
 
-/* Container for select, aligned right */
+/* --- nab - */
 .person-nav-select-container {
-  flex: 1;
   display: flex;
-  justify-content: flex-end;
   align-items: center;
+  min-width: 180px;
 }
 
-/* Style the select dropdown */
+
 .person-nav-select {
-  font-size: 1.05em;
-  border-radius: 6px;
-  border: 1px solid #fff;
-  background: #822323;
+  height: 40px;
+  font-size: 1.07em;
   font-weight: 500;
-  color: #ffffff;
-  min-width: 120px;
+  color: #fff;
+  background: #822323;
+  border-radius: 6px;
+  border: 1.5px solid #fff;
+  /* Make sure padding is enough for the text and arrow */
+  padding: 8px 36px 8px 16px; /* right padding for arrow, left for text */
+  min-width: 160px;           /* or higher if needed */
+  width: auto;                /* only as wide as content + padding */
   margin-left: 12px;
-}
-.person-nav-select:focus {
-  outline: none;
-  border: 2px solid #ffffff;
+  box-shadow: none;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg fill='white' height='18' viewBox='0 0 24 24' width='18' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 18px 18px;
+  overflow: visible; /* allow text to show */
+  text-overflow: ellipsis; /* fallback for too-long names */
+  white-space: nowrap;
 }
 
+.person-nav-select:focus,
+.person-nav-select:hover {
+  background: #8e3030;
+  outline: none;
+  box-shadow: 0 6px 18px 0 rgba(82, 30, 42, 0.21);
+}
+
+.person-nav-select option {
+  background: #fff;
+  color: #822323;
+  text-align: center;
+}
+
+/* Optional: animate the dropdown open (Webkit browsers only) */
+@media not all and (min-resolution:.001dpcm) { @supports (-webkit-appearance:none) {
+  .person-nav-select {
+    transition: box-shadow 0.28s cubic-bezier(.4,0,.2,1), border-color 0.28s cubic-bezier(.4,0,.2,1), background 0.25s;
+    will-change: box-shadow, border-color, background;
+  }
+} }
 @import url('https://fonts.googleapis.com/css2?family=Fleur+De+Leah&display=swap');
 
 .idea-board-title.whimsical {
@@ -721,6 +758,94 @@ html {
   font-size: 14px;
   color: #333;
   font-weight: 500;
+}
+
+
+/* --- Animated Cart Banner --- */
+.cart-banner {
+  position: fixed;
+  top: 80px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: linear-gradient(90deg, #822323 70%, #ba3f3f 100%);
+  color: #fff;
+  font-size: 1.18em;
+  font-weight: bold;
+  padding: 18px 38px 18px 28px;
+  border-radius: 32px;
+  box-shadow: 0 6px 28px 0 rgba(82,30,42,0.15);
+  display: flex;
+  align-items: center;
+  z-index: 10000;
+  animation: cartBannerFadeInOut 1.8s cubic-bezier(.4,0,.2,1);
+  gap: 18px;
+}
+
+@keyframes cartBannerFadeInOut {
+  0% {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-32px) scale(0.95);
+  }
+  15% {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0) scale(1.06);
+  }
+  80% {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-24px) scale(0.97);
+  }
+}
+
+.cart-banner-gif {
+  width: 48px;
+  height: 48px;
+  margin-right: 10px;
+  border-radius: 10px;
+  background: #fff5;
+  object-fit: cover;
+  box-shadow: 0 2px 8px rgba(82,30,42,0.13);
+}
+
+/* Responsive for mobile */
+@media (max-width: 600px) {
+  .cart-banner {
+    top: 60px;
+    font-size: 1em;
+    padding: 12px 12px 12px 10px;
+    border-radius: 20px;
+    gap: 8px;
+  }
+  .cart-banner-gif {
+    width: 30px;
+    height: 30px;
+    margin-right: 6px;
+  }
+}
+
+.idea-remove-btn {
+  position: absolute;
+  bottom: 8px;
+  left: 8px;
+  background: transparent;
+  border: none;
+  border-radius: 50%;
+  padding: 4px;
+  cursor: pointer;
+  z-index: 3;
+  transition: background 0.15s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.idea-remove-btn:hover {
+  background: #ffe5e5;
+}
+.idea-remove-btn svg {
+  display: block;
 }
 
 .friends-container {
