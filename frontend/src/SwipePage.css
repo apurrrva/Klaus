@@ -533,30 +533,58 @@ html {
   letter-spacing: 0.01em;
 }
 
-/* Container for select, aligned right */
+/* --- Enhanced Person Selector Dropdown --- */
 .person-nav-select-container {
+  position: relative; /* For custom dropdown arrow and animation */
   flex: 1;
   display: flex;
   justify-content: flex-end;
   align-items: center;
 }
 
-/* Style the select dropdown */
+/* Add drop shadow and subtle border */
 .person-nav-select {
-  font-size: 1.05em;
-  border-radius: 6px;
-  border: 1px solid #fff;
+  font-size: 1.07em;
+  border-radius: 8px;
+  border: 1.5px solid #fff;
   background: #822323;
   font-weight: 500;
-  color: #ffffff;
-  min-width: 120px;
+  color: #fff;
+  min-width: 130px;
   margin-left: 12px;
-}
-.person-nav-select:focus {
-  outline: none;
-  border: 2px solid #ffffff;
+  padding: 10px 32px 10px 16px;
+  box-shadow: 0 3px 12px 0 rgba(82, 30, 42, 0.12);
+  transition: box-shadow 0.28s cubic-bezier(.4,0,.2,1), border-color 0.28s cubic-bezier(.4,0,.2,1), background 0.25s;
+  appearance: none;
+  /* Custom caret (white arrow) */
+  background-image: url("data:image/svg+xml,%3Csvg fill='white' height='18' viewBox='0 0 24 24' width='18' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 18px 18px;
 }
 
+.person-nav-select:focus,
+.person-nav-select:hover {
+  border: 2px solid #f8e1e7;
+  background: #a03a3a;
+  outline: none;
+  box-shadow: 0 6px 18px 0 rgba(82, 30, 42, 0.21);
+}
+
+/* Animate option appearance (when dropdown opens) */
+.person-nav-select option {
+  background: #fff;
+  color: #822323;
+  transition: background 0.23s, color 0.18s;
+}
+
+/* Optional: animate the dropdown open (Webkit browsers only) */
+@media not all and (min-resolution:.001dpcm) { @supports (-webkit-appearance:none) {
+  .person-nav-select {
+    transition: box-shadow 0.28s cubic-bezier(.4,0,.2,1), border-color 0.28s cubic-bezier(.4,0,.2,1), background 0.25s;
+    will-change: box-shadow, border-color, background;
+  }
+} }
 @import url('https://fonts.googleapis.com/css2?family=Fleur+De+Leah&display=swap');
 
 .idea-board-title.whimsical {
@@ -719,3 +747,67 @@ html {
   font-weight: 500;
 }
 
+/* --- Animated Cart Banner --- */
+.cart-banner {
+  position: fixed;
+  top: 80px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: linear-gradient(90deg, #822323 70%, #ba3f3f 100%);
+  color: #fff;
+  font-size: 1.18em;
+  font-weight: bold;
+  padding: 18px 38px 18px 28px;
+  border-radius: 32px;
+  box-shadow: 0 6px 28px 0 rgba(82,30,42,0.15);
+  display: flex;
+  align-items: center;
+  z-index: 10000;
+  animation: cartBannerFadeInOut 1.8s cubic-bezier(.4,0,.2,1);
+  gap: 18px;
+}
+
+@keyframes cartBannerFadeInOut {
+  0% {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-32px) scale(0.95);
+  }
+  15% {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0) scale(1.06);
+  }
+  80% {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-24px) scale(0.97);
+  }
+}
+
+.cart-banner-gif {
+  width: 48px;
+  height: 48px;
+  margin-right: 10px;
+  border-radius: 10px;
+  background: #fff5;
+  object-fit: cover;
+  box-shadow: 0 2px 8px rgba(82,30,42,0.13);
+}
+
+/* Responsive for mobile */
+@media (max-width: 600px) {
+  .cart-banner {
+    top: 60px;
+    font-size: 1em;
+    padding: 12px 12px 12px 10px;
+    border-radius: 20px;
+    gap: 8px;
+  }
+  .cart-banner-gif {
+    width: 30px;
+    height: 30px;
+    margin-right: 6px;
+  }
+}

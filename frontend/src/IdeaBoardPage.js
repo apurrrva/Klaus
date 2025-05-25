@@ -12,10 +12,18 @@ function IdeaBoardPage({ onBack }) {
   const [selectedPerson, setSelectedPerson] = useState("Alice");
   const [ideas, setIdeas] = useState(allIdeas);
 
+  // maybe a bannerrr when u decide to add it to cart
+  const [showBanner, setShowBanner] = useState(false);
+  const [bannerMsg, setBannerMsg] = useState("");
+  
+
   const visibleIdeas = ideas.filter(idea => idea.assignedTo === selectedPerson);
 
   const handleAddToCart = (id) => {
     setIdeas((prevIdeas) => prevIdeas.filter(idea => idea.id !== id));
+    setBannerMsg("Gift Added to Cart!");
+    setShowBanner(true);
+    setTimeout(() => setShowBanner(false), 1800); // Hide after 1.8s
   };
 
   return (
@@ -35,6 +43,13 @@ function IdeaBoardPage({ onBack }) {
           </svg>
         </div>
       </div>
+
+      {/* --- Add animated banner here --- */}
+      {showBanner && (
+        <div className="cart-banner">
+          <span>{bannerMsg}</span>
+        </div>
+      )}
 
       {/* Main card container */}
       <div className="swipe-card-container">
