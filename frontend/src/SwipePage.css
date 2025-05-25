@@ -50,6 +50,10 @@ html {
 }
 
 .swipe-card {
+  /* Add this to prevent initial auto-scroll */
+  scroll-behavior: auto;
+  /* Ensure it starts at top */
+  scroll-snap-type: y mandatory;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -396,7 +400,7 @@ html {
       padding: 0px;
   }
 
-  .card-nav-icon {
+  .scard-nav-icon {
       font-size: 20px;
   }
 
@@ -608,7 +612,7 @@ html {
   text-shadow: 0 4px 16px #e0c2ff44;
 }
 
-.card-nav.person-selector-nav {
+.scard-nav.person-selector-nav {
   background: #822323;
   width: 100%;
   max-width: 500px; /* Match swipe-card or cart nav width */
@@ -756,6 +760,7 @@ html {
   font-weight: 500;
 }
 
+
 /* --- Animated Cart Banner --- */
 .cart-banner {
   position: fixed;
@@ -842,3 +847,401 @@ html {
 .idea-remove-btn svg {
   display: block;
 }
+
+.friends-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 500px;
+  height: 75vh; /* Reduced height */
+  padding: 0;
+  position: absolute; /* Changed from relative to allow positioning */
+  right: 470px; /* Push to the right */
+  top: 50px; /* Optional: aligns it to the top */
+  background-color: #f5f5f5;
+  overflow-y: auto;
+  padding-bottom: 100px; /* Space for fixed navigation */
+  margin-bottom: 20px; /* Added bottom margin */
+}
+
+.search-bar-container {
+  position: relative;
+  background-color: #FCF6ED; /* Off-white background */
+  border-radius: 25px;
+  padding: 12px 20px;
+  box-shadow: 0 2px 10px rgba(82, 77, 79, 0.3);
+  width: 90%;
+  max-width: 450px;
+  margin: 80px 0 20px;
+}
+.search-icon {
+  position: absolute;
+  left: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+}
+.search-input {
+  width: 100%;
+  border: none;
+  outline: none;
+  padding-left: 40px;
+  font-size: 16px;
+  background-color: transparent;
+  color: #524D4F; /* Dark gray text */
+}
+
+.search-input::placeholder {
+  color: #785257; /* Mauve/burgundy placeholder */
+}
+.connect-section {
+  background-color: #FCF6ED; /* Off-white background */
+  border-radius: 16px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 10px rgba(82, 77, 79, 0.3);
+  width: 90%;
+  max-width: 450px;
+}
+.connect-title {
+  color: #524D4F; /* Dark gray */
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0 0 15px 0;
+}
+
+.connect-buttons {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.connect-button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 15px;
+  color: #FCF6ED; /* Off-white text */
+  border: none;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 8px rgba(82, 77, 79, 0.2);
+}
+.connect-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(82, 77, 79, 0.3);
+}
+
+.connect-button.instagram {
+  background-color: #E4405F; /* Instagram color */
+}
+
+.connect-button.instagram:hover {
+  background-color: #C13584;
+}
+
+.connect-button.facebook {
+  background-color: #1877F2; /* Facebook color */
+}
+
+.connect-button.facebook:hover {
+  background-color: #145DBF;
+}
+
+.connect-button.contacts {
+  background-color: #34C759; /* Contacts color */
+}
+
+.connect-button.contacts:hover {
+  background-color: #2EA84A;
+}
+
+.connect-emoji {
+  font-size: 16px;
+}
+
+.tab-navigation {
+  display: flex;
+  background-color: #FCF6ED; /* Off-white background */
+  border-radius: 15px;
+  padding: 5px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 10px rgba(82, 77, 79, 0.3);
+  width: 90%;
+  max-width: 450px;
+}
+.tab-button {
+  flex: 1;
+  padding: 12px;
+  background-color: transparent;
+  color: #785257; /* Mauve/burgundy */
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.tab-button.active {
+  background-color: #800000; /* Maroon/rose */
+  color: #FCF6ED; /* Off-white text */
+}
+
+.tab-button:hover {
+  background-color: rgba(120, 82, 87, 0.1); /* Light mauve tint */
+}
+
+.friend-card {
+  background-color: #FCF6ED; /* Off-white background */
+  border-radius: 16px;
+  padding: 15px;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  box-shadow: 0 2px 10px rgba(82, 77, 79, 0.3);
+  width: 90%;
+  max-width: 450px;
+  transition: background-color 0.2s ease;
+}
+.friend-card:hover {
+  background-color: rgba(120, 82, 87, 0.05); /* Light mauve tint */
+}
+
+.friend-avatar-container {
+  position: relative;
+  margin-right: 15px;
+}
+
+.friend-avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #785257; /* Mauve/burgundy border */
+}
+
+.status-indicator {
+  position: absolute;
+  bottom: 2px;
+  right: 2px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 2px solid #FCF6ED; /* Off-white border */
+}
+
+.status-indicator.online {
+  background-color: #34C759; /* Green for online */
+}
+
+.status-indicator.offline {
+  background-color: #8E8E93; /* Gray for offline */
+}
+
+.friend-info {
+  flex: 1;
+}
+
+.friend-name {
+  margin: 0 0 5px 0;
+  font-size: 16px;
+  font-weight: bold;
+  color: #524D4F; /* Dark gray */
+}
+
+.friend-details {
+  margin: 0;
+  font-size: 14px;
+  color: #785257; /* Mauve/burgundy */
+}
+
+.friend-source {
+  margin: 5px 0 0 0;
+  font-size: 12px;
+  color: #800000; /* Maroon/rose */
+}
+
+@media (max-width: 768px) {
+  .friends-container {
+    padding-bottom: 80px;
+  }
+
+  .search-bar-container {
+    margin: 60px 0 15px;
+    padding: 10px 15px;
+  }
+
+  .search-input {
+    font-size: 14px;
+  }
+
+  .connect-section {
+    padding: 15px;
+  }
+
+  .connect-title {
+    font-size: 16px;
+  }
+
+  .connect-button {
+    padding: 8px 12px;
+    font-size: 13px;
+  }
+
+  .tab-button {
+    font-size: 14px;
+    padding: 10px;
+  }
+
+  .friend-card {
+    padding: 12px;
+  }
+
+  .friend-avatar {
+    width: 40px;
+    height: 40px;
+  }
+
+  .friend-name {
+    font-size: 14px;
+  }
+
+  .friend-details, .friend-source {
+    font-size: 12px;
+  }
+
+  .action-button {
+    padding: 6px 12px;
+    font-size: 13px;
+  }
+
+  .floating-menu-container {
+    bottom: 70px;
+  }
+}
+
+@media (max-width: 480px) {
+  .friends-container {
+    padding-bottom: 70px;
+  }
+
+  .search-bar-container {
+    margin: 50px 0 10px;
+    padding: 8px 10px;
+  }
+
+  .search-input {
+    font-size: 13px;
+    padding-left: 35px;
+  }
+
+  .search-icon {
+    width: 18px;
+    height: 18px;
+    left: 15px;
+  }
+
+  .connect-section {
+    padding: 10px;
+  }
+
+  .connect-title {
+    font-size: 14px;
+  }
+
+  .connect-button {
+    padding: 6px 10px;
+    font-size: 12px;
+  }
+
+  .tab-button {
+    font-size: 13px;
+    padding: 8px;
+  }
+
+  .friend-card {
+    padding: 10px;
+  }
+
+  .friend-avatar {
+    width: 35px;
+    height: 35px;
+  }
+
+  .friend-name {
+    font-size: 13px;
+  }
+
+  .friend-details, .friend-source {
+    font-size: 11px;
+  }
+
+  .action-button {
+    padding: 5px 10px;
+    font-size: 12px;
+  }
+
+  .card-nav {
+    padding: 6px;
+  }
+
+  .card-nav-item {
+    min-width: 45px;
+    min-height: 45px;
+    padding: 6px;
+  }
+
+  .card-nav-icon {
+    font-size: 20px;
+  }
+
+  .card-center-icon {
+    font-size: 24px;
+  }
+
+  .card-center-item {
+    transform: scale(1.15);
+  }
+
+  .card-center-item:hover {
+    transform: scale(1.25);
+  }
+}
+
+.action-button {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 8px rgba(82, 77, 79, 0.2);
+}
+
+.action-button.message {
+  background-color: #800000; /* Maroon/rose */
+  color: #FCF6ED; /* Off-white */
+}
+
+.action-button.message:hover {
+  background-color: #6B1C1C; /* Darker maroon */
+  transform: translateY(-2px);
+}
+
+.action-button.add-friend {
+  background-color: #34C759; /* Green */
+  color: #FCF6ED; /* Off-white */
+}
+
+.action-button.add-friend:hover {
+  background-color: #2EA84A; /* Darker green */
+  transform: translateY(-2px);
+}
+

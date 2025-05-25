@@ -3,7 +3,7 @@ import fakeItems from './data/fakeItems';
 import './SwipePage.css'; // Import the CSS file
 
 
-function SwipePage({ user, onBack, onCartClick ,onAddToGiftList, onIdeaBoard, onProfilesClick}) {
+function SwipePage({ user, onBack, onCartClick ,onAddToGiftList, onIdeaBoard, onProfilesClick, onFriendsPage}) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [showPrompt, setShowPrompt] = useState(false)
   const [showConfetti, setShowConfetti] = useState(false);
@@ -20,6 +20,8 @@ function SwipePage({ user, onBack, onCartClick ,onAddToGiftList, onIdeaBoard, on
   const touchSlop = 10;
 
   const currentItem = fakeItems[index];
+
+  
 
 
   // Handle menu toggle
@@ -66,6 +68,20 @@ function SwipePage({ user, onBack, onCartClick ,onAddToGiftList, onIdeaBoard, on
     </div>
   );
 
+  useEffect(() => {
+    // Multiple attempts to ensure scroll reset
+    const resetScroll = () => {
+      if (cardRef.current) {
+        cardRef.current.scrollTop = 0;
+      }
+    };
+
+    resetScroll(); // Immediate
+    requestAnimationFrame(resetScroll); // After render
+    setTimeout(resetScroll, 0); // Next tick
+    setTimeout(resetScroll, 100); // Backup after 100ms
+  }, []);
+
   // Handle center button click
   const handleCenterButtonClick = () => {
     setShowConfetti(true);
@@ -110,8 +126,16 @@ function SwipePage({ user, onBack, onCartClick ,onAddToGiftList, onIdeaBoard, on
     if (onProfilesClick) {
       onProfilesClick()
     } else {
-      console.log("Navigate to idea board")
-      // Default behavior if no onCartClick prop is provided
+      console.log("Navigate to profiles page")
+     
+    }
+  };
+  const handleFriendsPage = () => {
+    if (onFriendsPage) {
+      onFriendsPage()
+    } else {
+      console.log("Navigate to friends page")
+     
     }
   };
 
@@ -152,6 +176,7 @@ function SwipePage({ user, onBack, onCartClick ,onAddToGiftList, onIdeaBoard, on
     // Reset scroll position to top
     if (cardRef.current) {
       cardRef.current.scrollTop = 0;
+      cardRef.current.focus();
     }
 
     if (index < fakeItems.length - 1) {
@@ -396,7 +421,7 @@ function SwipePage({ user, onBack, onCartClick ,onAddToGiftList, onIdeaBoard, on
               </div>
             </div>
 
-            <div className="card-nav-item" onClick={() => handleNavigation("gifts")}>
+            <div className="card-nav-item" onClick={handleFriendsPage}>
               <div className="card-nav-icon">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="white">
                   <path d="M12,16a4,4,0,1,1,4-4A4,4,0,0,1,12,16Zm0-6a2,2,0,1,0,2,2A2,2,0,0,0,12,10Zm6,13A6,6,0,0,0,6,23a1,1,0,0,0,2,0,4,4,0,0,1,8,0,1,1,0,0,0,2,0ZM18,8a4,4,0,1,1,4-4A4,4,0,0,1,18,8Zm0-6a2,2,0,1,0,2,2A2,2,0,0,0,18,2Zm6,13a6.006,6.006,0,0,0-6-6,1,1,0,0,0,0,2,4,4,0,0,1,4,4,1,1,0,0,0,2,0ZM6,8a4,4,0,1,1,4-4A4,4,0,0,1,6,8ZM6,2A2,2,0,1,0,8,4,2,2,0,0,0,6,2ZM2,15a4,4,0,0,1,4-4A1,1,0,0,0,6,9a6.006,6.006,0,0,0-6,6,1,1,0,0,0,2,0Z" />
