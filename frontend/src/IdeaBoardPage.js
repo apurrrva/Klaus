@@ -11,11 +11,6 @@ function IdeaBoardPage({ onBack }) {
     { id: 12, name: "Wooden Teething Ring", image: "wooden-teething-ring.jpg", assignedTo: "Bob", price: 14.00 },
     { id: 13, name: "Camping Hammock", image: "camping-hammock.jpg", assignedTo: "Alice", price: 55.00 },
     { id: 19, name: "PS4: Elden Ring", image: "elden-ring.jpg", assignedTo: "Alice", price: 59.99 },
-    { id: 20, name: "Personalized Journal", image: "personalized-journal.jpg", assignedTo: "Bob", price: 28.00 },
-    { id: 21, name: "Makeup Remover Wipes", image: "makeup-remover-wipes.jpg", assignedTo: "Alice", price: 9.99 },
-    { id: 22, name: "Sakura Miku Figure", image: "miku.jpg", assignedTo: "Bob", price: 75.00 },
-    { id: 23, name: "Wireless Headphones", image: "headphone.jpg", assignedTo: "Alice", price: 120.00 },
-    { id: 25, name: "Bluetooth Speaker", image: "bluetooth-speaker.jpg", assignedTo: "Alice", price: 45.99 }
   ];
 
   const [selectedPerson, setSelectedPerson] = useState("Alice");
@@ -68,8 +63,8 @@ function IdeaBoardPage({ onBack }) {
       <div className="swipe-card-container">
         <div className="swipe-card" style={{ minHeight: 200 }}>
 
-            <h3 className="idea-board-title whimsical">
-            ༻Ideas Board༺
+            <h3 className="idea-board-title">
+            Ideas Board!
             </h3>
   
           <div className="idea-board-grid">
