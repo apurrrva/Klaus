@@ -68,6 +68,7 @@ html {
 }
 
 @media (max-width: 480px) {
+
   .card-nav {
     padding: 0px;
   }
