@@ -52,7 +52,7 @@ function ProfilesPage({ user, onStartSwiping, onBack, onIdeaBoard, onProfilesCli
         <div className = "details">
           Lists made: X
 
-          <button className='edit-btn' style = {{right : "0px"}}>
+          <button className='btn' style = {{right : "0px"}}>
             Edit details
           </button>
 
