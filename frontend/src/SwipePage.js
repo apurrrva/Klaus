@@ -2,14 +2,15 @@ import React, { useState, useRef, useEffect, useCallback } from 'react';
 import fakeItems from './data/fakeItems';
 import './SwipePage.css'; // Import the CSS file
 
-
-function SwipePage({ user, onBack, onCartClick ,onAddToGiftList, onIdeaBoard, onProfilesClick, onFriendsPage}) {
+function SwipePage({ user, onBack, onCartClick, onAddToGiftList, onIdeaBoard, onProfilesClick, onFriendsPage }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [showPrompt, setShowPrompt] = useState(false)
+  const [showPrompt, setShowPrompt] = useState(false);
   const [showConfetti, setShowConfetti] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
   const [index, setIndex] = useState(0);
   const [swipeDirection, setSwipeDirection] = useState(null);
+  const [swipeCount, setSwipeCount] = useState(0); // Track swipes
+  const [catGif, setCatGif] = useState('https://cdn.discordapp.com/attachments/1373870449506652182/1375792436001116191/cat.gif?ex=6832fa0d&is=6831a88d&hm=26dadeac4d528d9dc52a127f87e35dbb840f419e472fdfc65797166f75fc95e8&'); // Original GIF
   const cardRef = useRef(null);
   const startXRef = useRef(0);
   const startYRef = useRef(0);
@@ -22,18 +23,30 @@ function SwipePage({ user, onBack, onCartClick ,onAddToGiftList, onIdeaBoard, on
   const currentItem = fakeItems[index];
   const [isWishlisted, setIsWishlisted] = useState(false);
 
+  // New GIF URL (replace with the actual URL provided by the user)
+  const newCatGif = 'https://cdn.discordapp.com/attachments/1373870449506652182/1376029818864406618/discount-cat.gif?ex=6833d722&is=683285a2&hm=e64d6cd6bf09a4bdfe9faa730299622293ffaa081c9e535e83fa147c6576a472&'; 
+
   useEffect(() => {
     setIsWishlisted(false); // Reset wishlist status for new item
   }, [index]);
 
+  // Handle GIF change after 4 swipes
+  useEffect(() => {
+    if (swipeCount === 4) {
+      setCatGif(newCatGif); // Switch to new GIF
+      const timer = setTimeout(() => {
+        setCatGif('https://cdn.discordapp.com/attachments/1373870449506652182/1375792436001116191/cat.gif?ex=6832fa0d&is=6831a88d&hm=26dadeac4d528d9dc52a127f87e35dbb840f419e472fdfc65797166f75fc95e8&'); // Revert to original
+        setSwipeCount(0); // Reset swipe count
+      }, 5000); // 5 seconds
+      return () => clearTimeout(timer); // Cleanup timer
+    }
+  }, [swipeCount]);
+
   // Handle wishlist button click
   const handleWishlistClick = () => {
-    setIsWishlisted(true); // Update state to reflect item is wishlisted
-    onAddToGiftList(currentItem); // Call the passed prop to handle wishlist logic
+    setIsWishlisted(true);
+    onAddToGiftList(currentItem);
   };
-
-  
-
 
   // Handle menu toggle
   const toggleMenu = () => {
@@ -80,17 +93,15 @@ function SwipePage({ user, onBack, onCartClick ,onAddToGiftList, onIdeaBoard, on
   );
 
   useEffect(() => {
-    // Multiple attempts to ensure scroll reset
     const resetScroll = () => {
       if (cardRef.current) {
         cardRef.current.scrollTop = 0;
       }
     };
-
-    resetScroll(); // Immediate
-    requestAnimationFrame(resetScroll); // After render
-    setTimeout(resetScroll, 0); // Next tick
-    setTimeout(resetScroll, 100); // Backup after 100ms
+    resetScroll();
+    requestAnimationFrame(resetScroll);
+    setTimeout(resetScroll, 0);
+    setTimeout(resetScroll, 100);
   }, []);
 
   // Handle center button click
@@ -115,7 +126,7 @@ function SwipePage({ user, onBack, onCartClick ,onAddToGiftList, onIdeaBoard, on
   const handleNavigation = (page) => {
     console.log(`Navigating to ${page}`);
   };
-  
+
   const handleCartClick = () => {
     if (onCartClick) {
       onCartClick();
@@ -126,27 +137,25 @@ function SwipePage({ user, onBack, onCartClick ,onAddToGiftList, onIdeaBoard, on
 
   const handleIdeaBoard = () => {
     if (onIdeaBoard) {
-      onIdeaBoard()
+      onIdeaBoard();
     } else {
-      console.log("Navigate to idea board")
-      // Default behavior if no onCartClick prop is provided
+      console.log("Navigate to idea board");
     }
   };
 
   const handleProfilesPage = () => {
     if (onProfilesClick) {
-      onProfilesClick()
+      onProfilesClick();
     } else {
-      console.log("Navigate to profiles page")
-     
+      console.log("Navigate to profiles page");
     }
   };
+
   const handleFriendsPage = () => {
     if (onFriendsPage) {
-      onFriendsPage()
+      onFriendsPage();
     } else {
-      console.log("Navigate to friends page")
-     
+      console.log("Navigate to friends page");
     }
   };
 
@@ -173,18 +182,23 @@ function SwipePage({ user, onBack, onCartClick ,onAddToGiftList, onIdeaBoard, on
   };
 
   const handleLike = () => {
-    animateSwipe("right", nextItem);
+    animateSwipe("right", () => {
+      setSwipeCount(prev => prev + 1); // Increment swipe count
+      nextItem();
+    });
   };
 
   const handleDislike = () => {
-    animateSwipe("left", nextItem);
+    animateSwipe("left", () => {
+      setSwipeCount(prev => prev + 1); // Increment swipe count
+      nextItem();
+    });
   };
 
   const nextItem = () => {
     setSwipeOffset(0);
     setSwipeDirection(null);
 
-    // Reset scroll position to top
     if (cardRef.current) {
       cardRef.current.scrollTop = 0;
       cardRef.current.focus();
@@ -361,7 +375,7 @@ function SwipePage({ user, onBack, onCartClick ,onAddToGiftList, onIdeaBoard, on
                       viewBox="0 0 24 24"
                       width="20"
                       height="20"
-                      fill={isWishlisted ? "#ff4d4d" : "red"} // Slightly darker red when wishlisted
+                      fill={isWishlisted ? "#ff4d4d" : "red"}
                       className="heart-icon"
                     >
                       <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
@@ -399,7 +413,7 @@ function SwipePage({ user, onBack, onCartClick ,onAddToGiftList, onIdeaBoard, on
         </div>
 
         <img
-          src="https://cdn.discordapp.com/attachments/1373870449506652182/1375792436001116191/cat.gif?ex=6832fa0d&is=6831a88d&hm=26dadeac4d528d9dc52a127f87e35dbb840f419e472fdfc65797166f75fc95e8&"
+          src={catGif}
           alt="Dancing Cat"
           className="cat-gif"
         />
